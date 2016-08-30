@@ -39,3 +39,29 @@ QUnit.test("Box reaches goal", function( assert ){
   character.moveUp();
   assert.ok(world.isGoalReached());
 });
+
+
+/**
+As the scenery painter
+I want to access all properties of World
+**/
+QUnit.test("World properties can be accessed", function( assert ){
+  var character = new Box({x: 0, y: 0});
+  var world = new World({
+    initialHeroPosition: character.getPosition(),
+    hero: character,
+    evils: [new Box({x:0, y:150})],
+    goal: new Box({x: 20, y: 70})
+  });
+
+  assert.deepEqual(world.getEvils(), [new Box({x:0, y:150})]);
+  assert.deepEqual(world.getHero(), new Box({x: 0, y: 0}));
+  assert.deepEqual(world.getInitialHeroPosition(), {x:0, y:0});
+
+  var expectedGoal = {
+    '_position': {'x': 20, 'y': 70},
+    'size': {'height': 50, 'width': 50},
+    'velocity': {'vx': 0, 'vy': 0}
+  };
+  assert.deepEqual(world.getGoal(), expectedGoal);
+});

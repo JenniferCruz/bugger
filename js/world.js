@@ -32,3 +32,21 @@ World.prototype._detectCollitions = function() {
 World.prototype.isGoalReached = function(){
   return this._hero.collides(this._goal);
 }
+
+World.prototype.getEvils = function(){
+  //return Object.assign([], this._evils);
+  return this._evils;
+}
+
+World.prototype.getHero = function(){
+  return this._hero;
+}
+
+World.prototype.getGoal = function(){
+  //return Object.assign({}, this._goal);
+  return this._goal;
+}
+
+World.prototype.getInitialHeroPosition = function(){
+  return Object.assign({}, this._initialHeroPosition);
+}

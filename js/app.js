@@ -10,23 +10,25 @@ var canvas = document.querySelector('canvas'),
 
 var bug = new Box({x:5, y: 5});
 var human = new Box({x:5, y: 5});
-human.setVelocity({vx:0, vy: 20});
+human.setVelocity({vx:0, vy: 1});
 var scenery = {
   characters: [
       bug,
       human
   ]
 }
+
 scenery.draw = function() {
-    
       this.characters.forEach(function(character){
-          ctx.strokeRect(character.position.x, 600 - character.position.y, 50, 50);
+          ctx.strokeRect(character.getPosition().x, 600 - character.getPosition().y, 50, 50);
       });
 }
 
 scenery.tick = function() {
       this.characters.forEach(function(character){
           character.tick();
+          if(character !== bug && bug.collides(character))
+            bug.setPosition({x:5, y: 5});
       });
 }
 
@@ -35,6 +37,7 @@ scenery.keepDrawing = function() {
    scenery.tick();
    window.requestAnimationFrame(function(){ scenery.keepDrawing();  });
 }
+
 scenery.keepDrawing();
 
 document.addEventListener('keyup', function(e) {
