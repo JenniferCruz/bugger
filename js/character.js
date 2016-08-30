@@ -1,4 +1,7 @@
 var MOVING_SPEED = 20;
+var RANGE_X = [0,455];
+var RANGE_Y = [600,44];
+
 function Box(point, size) {
    this._position = point;
    this.velocity = {vx: 0, vy: 0};
@@ -19,7 +22,8 @@ Box.prototype.moveDown = function() {
 }
 Box.prototype.move = function(incrementPosition) {
     this.setVelocity(incrementPosition);
-    this.tick();
+    this.tickManual();
+    // this.tick();
     this.stop();
 }
 Box.prototype.stop = function() {
@@ -28,10 +32,42 @@ Box.prototype.stop = function() {
 Box.prototype.setVelocity = function(velocity) {
      this.velocity = velocity;
 }
+
+
+
 Box.prototype.tick = function() {
   this._position.x += this.velocity.vx;
   this._position.y += this.velocity.vy;
 }
+
+Box.prototype.tickAuto = function(){
+  if(this._position.x >= RANGE_X[1] || this._position.x <= 0)
+    this.velocity.vx *= -1;
+  if(this._position.y >= RANGE_Y[0] || this._position.y <= 40)
+    this.velocity.vy *= -1;
+  this._position.x += this.velocity.vx;
+  this._position.y += this.velocity.vy;
+}
+
+Box.prototype.tickManual = function(){
+  if(this._position.x > RANGE_X[1]){
+    this._position.x = RANGE_X[1];
+  }
+  if(this._position.x < 0){
+    this._position.x = 0;
+  }
+  if(this._position.y > RANGE_Y[0]){
+    this._position.y = RANGE_Y[0];
+  }
+  if(this._position.y < 40){
+    this._position.y = 40;
+  }
+  this._position.x += this.velocity.vx;
+  this._position.y += this.velocity.vy;
+}
+
+
+
 
 Box.prototype.collides = function(other) {
     return (other._position.x >= this._position.x && other._position.x <=  this._position.x + this.size.width)

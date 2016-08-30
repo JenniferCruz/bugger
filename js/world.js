@@ -13,9 +13,9 @@ World.prototype.tick = function() {
 
 World.prototype._tickAllCharacters = function() {
 	//step for the hero and the evils
-    this._hero.tick();
+    this._hero.tickManual();// this._hero.tick();
     this._evils.forEach(function(evil) {
-        evil.tick();
+        evil.tickAuto(); // evil.tick();
     });
 }
 

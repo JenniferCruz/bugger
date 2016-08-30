@@ -28,12 +28,12 @@ I want to know when I reach the goal
 **/
 
 QUnit.test("Box reaches goal", function( assert ){
-  var character = new Box({x: 20, y: 0});
+  var character = new Box({x: 20, y: 10});
   var world = new World({
     initialHeroPosition: {x:0, y:0},
     hero: character,
     evils: [new Box({x:0, y:150})],
-    goal: new Box({x: 20, y: 70})
+    goal: new Box({x: 20, y: 80})
   });
   assert.notOk(world.isGoalReached());
   character.moveUp();
@@ -57,11 +57,5 @@ QUnit.test("World properties can be accessed", function( assert ){
   assert.deepEqual(world.getEvils(), [new Box({x:0, y:150})]);
   assert.deepEqual(world.getHero(), new Box({x: 0, y: 0}));
   assert.deepEqual(world.getInitialHeroPosition(), {x:0, y:0});
-
-  var expectedGoal = {
-    '_position': {'x': 20, 'y': 70},
-    'size': {'height': 50, 'width': 50},
-    'velocity': {'vx': 0, 'vy': 0}
-  };
-  assert.deepEqual(world.getGoal(), expectedGoal);
+  assert.deepEqual(world.getGoal(), new Box({x: 20, y: 70}));
 });
