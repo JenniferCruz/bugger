@@ -8,8 +8,8 @@ var canvas = document.querySelector('canvas'),
 
 //Singleton
 
-var bug = new Box({x:5, y: 5});
-var human = new Box({x:5, y: 5});
+var bug = Box.createBox({x:5, y: 5});
+var human = Box.createBox({x:5, y: 5});
 human.setVelocity({vx:0, vy: 1});
 var scenery = {
   characters: [
