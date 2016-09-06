@@ -26,7 +26,7 @@ sceneryCanvas.draw = function() {
           ctx.strokeStyle='#000';
           //ctx.strokeRect(character.getPosition().x, character.getPosition().y, 50, 50);
           ctx.strokeRect(character.getPosition().x, 600 - character.getPosition().y, 50, 50);
-          console.log(character.collides(scenery._staticObjects[0]));
+          console.log(character.collides(scenery._obstacles[0]));
       });
       ctx.strokeStyle='#FF0000';
       //ctx.strokeRect(scenery.getHero().getPosition().x, scenery.getHero().getPosition().y, 50, 50);
@@ -35,7 +35,7 @@ sceneryCanvas.draw = function() {
       //ctx.strokeRect(scenery.getGoal().getPosition().x, scenery.getGoal().getPosition().y, 50, 50);
       ctx.strokeRect(scenery.getGoal().getPosition().x, 600 - scenery.getGoal().getPosition().y, 50, 50);
       ctx.strokeStyle='#F0C60B';
-      scenery._staticObjects.forEach(function (obstacle) {
+      scenery._obstacles.forEach(function (obstacle) {
          ctx.strokeRect(obstacle.getPosition().x, 600 - obstacle.getPosition().y, obstacle.size.width, obstacle.size.height);
          //ctx.strokeRect(obstacle.getPosition().x, obstacle.getPosition().y, obstacle.size.width, obstacle.size.height);
       });

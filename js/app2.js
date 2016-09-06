@@ -28,14 +28,13 @@ var verticalRight = Box.createBox({x:505, y: 0}, {width:1, height:606});
 var scenery = new World({
   initialHeroPosition: {x:1, y:1},
   hero: player,
-  evils: [human, human2],
+  evils: [human],//, human2],
   goal: new Box({x:200, y: 200}),
   staticObjects: [horizontalTop, verticalLeft, horizontalBottom, verticalRight]
 });
 
 // scenery is a singleton, so an object is created
-var sceneryCanvas = {
-}
+var sceneryCanvas = {};
 
 
 sceneryCanvas.draw = function() {
@@ -50,32 +49,30 @@ sceneryCanvas.draw = function() {
     ctx.strokeStyle='#AABB11'; // DRAW GREENISH GOAL
     ctx.strokeRect(scenery.getGoal().getPosition().x, 600 - scenery.getGoal().getPosition().y, scenery.getGoal().size.width, scenery.getGoal().size.height);
 
-    scenery._staticObjects.forEach(function(obst){
+    scenery._obstacles.forEach(function(obst){
         ctx.strokeStyle='#FFBF00'; // DRAW YELLOW BORDERS
         ctx.strokeRect(obst.getPosition().x, obst.getPosition().y, obst.size.width, obst.size.height);
     });
-}
+};
 
 sceneryCanvas.tick = function() {
       scenery.tick();
-      if(scenery.isGoalReached()) console.log('Hurray!');
-}
+};
 
 sceneryCanvas.keepDrawing = function() {
    sceneryCanvas.draw();
    sceneryCanvas.tick();
    window.requestAnimationFrame(function(){ sceneryCanvas.keepDrawing();  });
-}
+};
 
 sceneryCanvas.keepDrawing();
 
 document.addEventListener('keyup', function(e) {
-  var hero = player;
-    var heroAction = {
-        37: function() { hero.moveLeft(); } ,
-        38: function() { hero.moveUp(); },
-        39: function() { hero.moveRight(); },
-        40: function() { hero.moveDown(); }
+    var playerAction = {
+        37: function() { scenery.leftAction(); } ,
+        38: function() { scenery.upAction(); },
+        39: function() { scenery.rightAction(); },
+        40: function() { scenery.downAction(); }
     };
-    heroAction[e.keyCode] && heroAction[e.keyCode]();
+    playerAction[e.keyCode] && playerAction[e.keyCode]();
 });

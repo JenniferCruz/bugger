@@ -4,25 +4,25 @@
 **/
 QUnit.test( "Moving hero left", function( assert ) {
   var character = Box.createHero({x:20, y:40});
-  character.moveLeft();
+  character.move({vy:2, vx:-2});
   assert.ok(character.getPosition().x < 20 );
 });
 
 QUnit.test( "Moving hero Right", function( assert ) {
   var character = Box.createHero({x:20, y:40});
-  character.moveRight();
+  character.move({vy:2, vx:2});
   assert.ok(character.getPosition().x > 20 );
 });
 
 QUnit.test( "Moving hero Up", function( assert ) {
   var character = Box.createHero({x:20, y:40});
-  character.moveUp();
+  character.move({vy:2, vx:0});
   assert.ok(character.getPosition().y > 40 );
 });
 
 QUnit.test( "Moving hero Down", function( assert ) {
   var character = Box.createHero({x:20, y:40});
-  character.moveDown();
+  character.move({vy:-2, vx:2});
   assert.ok(character.getPosition().y < 40 );
 });
 

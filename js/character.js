@@ -1,4 +1,4 @@
-var MOVING_SPEED = 20;
+
 var RANGE_X = [0,455];
 var RANGE_Y = [600,44];
 
@@ -11,10 +11,8 @@ function Box(point, size) {
 
 
     obj.move = function(incrementPosition) {
-        this.setVelocity(incrementPosition);
-        //this.tickManual();
-         this.tick();
-        this.stop();
+        this._position.x += incrementPosition.vx;
+        this._position.y += incrementPosition.vy;
     }
 
    obj.stop = function() {
@@ -26,8 +24,7 @@ function Box(point, size) {
     }
 
    obj.tick = function() {
-        this._position.x += this.velocity.vx;
-        this._position.y += this.velocity.vy;
+       obj.move(this.velocity);
     }
 
     /**
@@ -72,8 +69,6 @@ function Box(point, size) {
    // }
 
    obj.collides = function(other) {
-        //return (other._position.x >= this._position.x && other._position.x <=  this._position.x + this.size.width)
-        //    &&  (other._position.y >= this._position.y && other._position.y <=  this._position.y + this.size.height);
         return !(this._position.x + this.size.width < other._position.x || this._position.x > other._position.x + other.size.width) &&
             !(this._position.y + this.size.height < other._position.y || this._position.y > other._position.y + other.size.height);
    }
@@ -99,20 +94,6 @@ function Box(point, size) {
 
 function Hero(point, size) {
     var obj = Box.createBox(point, size);
-
-    obj.moveRight = function() {
-        this.move({vx: MOVING_SPEED, vy:0});
-    }
-    obj.moveLeft = function() {
-        this.move({vx: -MOVING_SPEED, vy:0});
-    }
-    obj.moveUp = function() {
-        this.move({vx: 0, vy:MOVING_SPEED});
-    }
-    obj.moveDown = function() {
-        this.move({vx: 0, vy:-MOVING_SPEED});
-    }
-
     return obj;
 }
 
