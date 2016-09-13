@@ -1,52 +1,75 @@
 
-
 var canvas = document.querySelector('canvas'),
-     ctx = canvas.getContext('2d');
+    ctx = canvas.getContext('2d');
 
 // ctx.drawImage(Resources.get(this.sprite), this.startX, this.startY);
 
+// Variables to set up scenery
 
-//Singleton
+// hero
+var player = Box.createBox({x:20, y: 50});
 
-var bug = Box.createBox({x:5, y: 5});
-var human = Box.createBox({x:5, y: 5});
-human.setVelocity({vx:0, vy: 1});
-var scenery = {
-  characters: [
-      bug,
-      human
-  ]
-}
+// enemies
+var human = Box.createBox({x:1, y: 300});
+human.setVelocity({vx:2, vy: 0});
+var human2 = Box.createBox({x:1, y: 120});
+human2.setVelocity({vx:0, vy: 0.5});
 
-scenery.draw = function() {
-      this.characters.forEach(function(character){
-          ctx.strokeRect(character.getPosition().x, 600 - character.getPosition().y, 50, 50);
-      });
-}
+// borders
+var horizontalTop = Box.createBox({x:0, y: 0}, {width:505, height:1});
+var verticalLeft = Box.createBox({x:0, y: 0}, {width:1, height:606});
+var horizontalBottom = Box.createBox({x:0, y: 606}, {width:505, height:1});
+var verticalRight = Box.createBox({x:505, y: 0}, {width:1, height:606});
 
-scenery.tick = function() {
-      this.characters.forEach(function(character){
-          character.tick();
-          if(character !== bug && bug.collides(character))
-            bug.setPosition({x:5, y: 5});
-      });
-}
+// world
+var scenery = new World({
+    initialHeroPosition: {x:1, y:1},
+    hero: player,
+    evils: [human, human2],
+    goal: Box.createBox({x:200, y: 200}),
+    staticObjects: [horizontalTop, verticalLeft, horizontalBottom, verticalRight]
+});
 
-scenery.keepDrawing = function() {
-   scenery.draw();
-   scenery.tick();
-   window.requestAnimationFrame(function(){ scenery.keepDrawing();  });
-}
+// scenery is a singleton, so an object is created
+var sceneryCanvas = {};
 
-scenery.keepDrawing();
+
+sceneryCanvas.draw = function() {
+    scenery.getEvils().forEach(function(character){
+        ctx.strokeStyle='#000'; // DRAW BLACK ENEMIES
+        ctx.strokeRect(character.getPosition().x, 600 - character.getPosition().y, character.size.width, character.size.height);
+    });
+
+    ctx.strokeStyle='#FF0000'; // DRAW RED HERO
+    ctx.strokeRect(scenery.getHero().getPosition().x, 600 - scenery.getHero().getPosition().y, scenery.getHero().size.width, scenery.getHero().size.height);
+
+    ctx.strokeStyle='#AABB11'; // DRAW GREENISH GOAL
+    ctx.strokeRect(scenery.getGoal().getPosition().x, 600 - scenery.getGoal().getPosition().y, scenery.getGoal().size.width, scenery.getGoal().size.height);
+
+    scenery._obstacles.forEach(function(obst){
+        ctx.strokeStyle='#FFBF00'; // DRAW YELLOW BORDERS
+        ctx.strokeRect(obst.getPosition().x, obst.getPosition().y, obst.size.width, obst.size.height);
+    });
+};
+
+sceneryCanvas.tick = function() {
+    scenery.tick();
+};
+
+sceneryCanvas.keepDrawing = function() {
+    sceneryCanvas.draw();
+    sceneryCanvas.tick();
+    window.requestAnimationFrame(function(){ sceneryCanvas.keepDrawing();  });
+};
+
+sceneryCanvas.keepDrawing();
 
 document.addEventListener('keyup', function(e) {
-  var hero = bug;
-    var heroAction = {
-        37: function() { hero.moveLeft(); } ,
-        38: function() { hero.moveUp(); },
-        39: function() { hero.moveRight(); },
-        40: function() { hero.moveDown(); }
+    var playerAction = {
+        37: function() { scenery.leftAction(); } ,
+        38: function() { scenery.upAction(); },
+        39: function() { scenery.rightAction(); },
+        40: function() { scenery.downAction(); }
     };
-    heroAction[e.keyCode] && heroAction[e.keyCode]();
+    playerAction[e.keyCode] && playerAction[e.keyCode]();
 });

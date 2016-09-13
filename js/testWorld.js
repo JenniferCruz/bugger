@@ -3,7 +3,7 @@ As player
 I want to go back to the initial position when I'm in contact with the evil character
 **/
 QUnit.test("Go back to initial position when collition", function(assert){
-  var hero = Box.createHero({x:20, y:25});
+  var hero = Box.createBox({x:20, y:25});
   var world = new World({
     initialHeroPosition: {x:20, y:25},
     hero: hero,
@@ -27,7 +27,7 @@ I want to know when I reach the goal
 **/
 
 QUnit.test("Box reaches goal", function( assert ){
-  var character = Box.createHero({x: 20, y: 10});
+  var character = Box.createBox({x: 20, y: 10});
   var world = new World({
     //initialHeroPosition: {x:20, y:10},
     hero: character,
@@ -50,7 +50,7 @@ QUnit.test("Enemies bounce off obstacles", function( assert ){
   enemy.setVelocity({vx:100, vy: 0});
 
   var world = new World({
-    hero: Box.createHero({x: 350, y: 0}),
+    hero: Box.createBox({x: 350, y: 0}),
     evils: [enemy],
     goal: Box.createBox({x: 350, y: 500}),
     staticObjects: [Box.createBox({x: 450, y: 0}, {width:1, height:600})]
@@ -71,7 +71,7 @@ QUnit.test("Enemies bounce off obstacles", function( assert ){
 QUnit.module('Player cannot pass through obstacles', function( assert ){
     QUnit.test('1 obstacle in the left', function( assert ){
         var world = new World({
-            hero: Box.createHero({x: 60, y: 60}),
+            hero: Box.createBox({x: 60, y: 60}),
             evils: [Box.createBox({x:0, y:500})],
             goal: Box.createBox({x: 0, y: 400}),
             staticObjects: [Box.createBox({x: 0, y: 0}, {width:1, height:606})]
@@ -86,7 +86,7 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
 
     QUnit.test('multiple obstacles in the left', function( assert ){
         var world = new World({
-            hero: Box.createHero({x: 80, y: 60}),
+            hero: Box.createBox({x: 80, y: 60}),
             evils: [Box.createBox({x:0, y:500})],
             goal: Box.createBox({x: 0, y: 400}),
             staticObjects: [Box.createBox({x: 0, y: 0}, {width:1, height:606}),
@@ -106,7 +106,7 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
 
     QUnit.test('1 obstacle in the right', function( assert ){
         var world = new World({
-            hero: Box.createHero({x: 60, y: 60}),
+            hero: Box.createBox({x: 60, y: 60}),
             evils: [Box.createBox({x:0, y:0})],
             goal: Box.createBox({x: 0, y: 0}),
             staticObjects: [Box.createBox({x: 170, y: 0}, {width:1, height:606})]
@@ -121,7 +121,7 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
 
     QUnit.test('multiple obstacles in the right', function( assert ){
         var world = new World({
-            hero: Box.createHero({x: 80, y: 60}),
+            hero: Box.createBox({x: 80, y: 60}),
             evils: [Box.createBox({x:0, y:500})],
             goal: Box.createBox({x: 0, y: 400}),
             staticObjects: [Box.createBox({x: 0, y: 0}, {width:1, height:606}),
@@ -139,7 +139,7 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
 
     QUnit.test('1 obstacle above', function( assert ){
         var world = new World({
-            hero: Box.createHero({x: 60, y: 555}),
+            hero: Box.createBox({x: 60, y: 555}),
             evils: [Box.createBox({x:0, y:0})],
             goal: Box.createBox({x: 0, y: 0}),
             staticObjects: [Box.createBox({x: 0, y: 600}, {width:500, height:1})]
@@ -154,7 +154,7 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
 
     QUnit.test('multiple obstacles above', function( assert ){
         var world = new World({
-            hero: Box.createHero({x: 250, y: 470}),
+            hero: Box.createBox({x: 250, y: 470}),
             evils: [Box.createBox({x:0, y:500})],
             goal: Box.createBox({x: 0, y: 400}),
             staticObjects: [Box.createBox({x: 0, y: 606}, {width:500, height:6}),
@@ -172,7 +172,7 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
 
     QUnit.test('1 obstacle below', function( assert ){
         var world = new World({
-            hero: Box.createHero({x: 60, y: 95}),
+            hero: Box.createBox({x: 60, y: 95}),
             evils: [Box.createBox({x:0, y:600})],
             goal: Box.createBox({x: 0, y: 400}),
             staticObjects: [Box.createBox({x: 0, y: 0}, {width:500, height:1})]
@@ -187,7 +187,7 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
 
     QUnit.test('multiple obstacles below', function( assert ){
         var world = new World({
-            hero: Box.createHero({x: 250, y: 280}),
+            hero: Box.createBox({x: 250, y: 280}),
             evils: [Box.createBox({x:0, y:600})],
             goal: Box.createBox({x: 0, y: 400}),
             staticObjects: [Box.createBox({x: 0, y: 0}, {width:500, height:6}),
@@ -205,7 +205,7 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
 
     QUnit.test('multiple obstacles lining borders', function( assert ){
         var world = new World({
-            hero: Box.createHero({x:20, y: 50}),
+            hero: Box.createBox({x:20, y: 50}),
             evils: [Box.createBox({x:1, y: 300})],
             goal: Box.createBox({x:200, y: 200}),
             staticObjects: [Box.createBox({x:0, y: 0}, {width:505, height:1}),

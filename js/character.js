@@ -26,47 +26,7 @@ function Box(point, size) {
    obj.tick = function() {
        obj.move(this.velocity);
     }
-
-    /**
-     * mas o menos Evil.thick()
-     * if(
-     */
-   //obj.tickAuto = function(){
-   //     if(this._position.x >= RANGE_X[1] || this._position.x <= 0)
-   //         this.velocity.vx *= -1;
-   //     if(this._position.y >= RANGE_Y[0] || this._position.y <= 40)
-   //         this.velocity.vy *= -1;
-   //     this._position.x += this.velocity.vx;
-   //     this._position.y += this.velocity.vy;
-   // }
-
-    /**
-     * tryToMove(potentialCollitioners) {
-     *     collides with any element in potentialCollision?
-      *     return false;
-      *
-      *     return true
-     *  }
-     *
-     */
-   //
-   //obj.tickManual = function(){
-   //     //
-   //     if(this._position.x > RANGE_X[1]){
-   //         this._position.x = RANGE_X[1];
-   //     }
-   //     if(this._position.x < 0){
-   //         this._position.x = 0;
-   //     }
-   //     if(this._position.y > RANGE_Y[0]){
-   //         this._position.y = RANGE_Y[0];
-   //     }
-   //     if(this._position.y < 40){
-   //         this._position.y = 40;
-   //     }
-   //     this._position.x += this.velocity.vx;
-   //     this._position.y += this.velocity.vy;
-   // }
+    
 
    obj.collides = function(other) {
         return !(this._position.x + this.size.width < other._position.x || this._position.x > other._position.x + other.size.width) &&
@@ -92,16 +52,7 @@ function Box(point, size) {
 }
 
 
-function Hero(point, size) {
-    var obj = Box.createBox(point, size);
-    return obj;
-}
-
 Box.createBox = function(point, size) {
      return Box(point, size);
 }
-
-Box.createHero = function (point, size) {
-    return Hero(point, size); //Box.createBox(point,size);
-};
 

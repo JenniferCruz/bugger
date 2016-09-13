@@ -3,25 +3,25 @@
   I want to move a chracter horizontally or vertically
 **/
 QUnit.test( "Moving hero left", function( assert ) {
-  var character = Box.createHero({x:20, y:40});
+  var character = Box.createBox({x:20, y:40});
   character.move({vy:2, vx:-2});
   assert.ok(character.getPosition().x < 20 );
 });
 
 QUnit.test( "Moving hero Right", function( assert ) {
-  var character = Box.createHero({x:20, y:40});
+  var character = Box.createBox({x:20, y:40});
   character.move({vy:2, vx:2});
   assert.ok(character.getPosition().x > 20 );
 });
 
 QUnit.test( "Moving hero Up", function( assert ) {
-  var character = Box.createHero({x:20, y:40});
+  var character = Box.createBox({x:20, y:40});
   character.move({vy:2, vx:0});
   assert.ok(character.getPosition().y > 40 );
 });
 
 QUnit.test( "Moving hero Down", function( assert ) {
-  var character = Box.createHero({x:20, y:40});
+  var character = Box.createBox({x:20, y:40});
   character.move({vy:-2, vx:2});
   assert.ok(character.getPosition().y < 40 );
 });
@@ -67,7 +67,7 @@ QUnit.test("Box position setter is inmutable", function( assert ){
 QUnit.module("Detect character collitions", function( assert ){
 
   QUnit.test("Detect evil and player collition", function( assert ){
-    var player = Box.createHero({x:0, y:0},{width:21, height:21});
+    var player = Box.createBox({x:0, y:0},{width:21, height:21});
     var evil = Box.createBox({x:20, y: 20});
     assert.ok(player.collides(evil));
   });
