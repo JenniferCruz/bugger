@@ -3,12 +3,12 @@ var RANGE_X = [0,455];
 var RANGE_Y = [600,44];
 
 
-function Box(point, size) {
+function Box(point, size, color) {
     var obj = {};
     obj._position = point;
     obj.velocity = {vx: 0, vy: 0};
     obj.size = size || {width: 50, height: 50};
-
+    obj.color = color;
 
     obj.move = function(incrementPosition) {
         this._position.x += incrementPosition.vx;
@@ -52,7 +52,7 @@ function Box(point, size) {
 }
 
 
-Box.createBox = function(point, size) {
-     return Box(point, size);
+Box.createBox = function(point, size, color) {
+     return Box(point, size, color);
 }
 

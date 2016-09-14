@@ -24,26 +24,26 @@ var game = function(){
     // Variables to set up scenery
 
     // hero
-    var player = Box.createBox({x:20, y: 50});
+    var player = Box.createBox({x:20, y: 50}, {width: 50, height: 50}, '#FF0000');
 
     // enemies
-    var human = Box.createBox({x:1, y: 300});
+    var human = Box.createBox({x:1, y: 300}, {width: 50, height: 50}, '#000');
     human.setVelocity({vx:2, vy: 0});
-    var human2 = Box.createBox({x:1, y: 120});
+    var human2 = Box.createBox({x:1, y: 120}, {width: 50, height: 50}, '#000');
     human2.setVelocity({vx:0, vy: 0.5});
 
     // borders
-    var horizontalTop = Box.createBox({x:0, y: 0}, {width:505, height:1});
-    var verticalLeft = Box.createBox({x:0, y: 0}, {width:1, height:606});
-    var horizontalBottom = Box.createBox({x:0, y: 606}, {width:505, height:1});
-    var verticalRight = Box.createBox({x:505, y: 0}, {width:1, height:606});
+    var horizontalTop = Box.createBox({x:0, y: 0}, {width:505, height:1}, '#FFBF00');
+    var verticalLeft = Box.createBox({x:0, y: 0}, {width:1, height:606}, '#FFBF00');
+    var horizontalBottom = Box.createBox({x:0, y: 606}, {width:505, height:1}, '#FFBF00');
+    var verticalRight = Box.createBox({x:505, y: 0}, {width:1, height:606}, '#FFBF00');
 
     // world
     var scenery = new World({
         initialHeroPosition: {x:1, y:1},
         hero: player,
         evils: [human, human2],
-        goal: Box.createBox({x:200, y: 200}),
+        goal: Box.createBox({x:200, y: 200}, {width: 50, height: 50}, '#AABB11'),
         staticObjects: [horizontalTop, verticalLeft, horizontalBottom, verticalRight]
     });
 
@@ -53,23 +53,23 @@ var game = function(){
 
     sceneryCanvas.draw = function() {
 
-        scenery.forEach(function(box) {
-
-        });
+        //scenery.forEach(function(box) {
+        //
+        //});
 
         scenery.getEvils().forEach(function(character){
-            ctx.strokeStyle='#000'; // DRAW BLACK ENEMIES
+            ctx.strokeStyle= character.color; // DRAW BLACK ENEMIES
             ctx.strokeRect(character.getPosition().x, 600 - character.getPosition().y, character.size.width, character.size.height);
         });
 
-        ctx.strokeStyle='#FF0000'; // DRAW RED HERO
+        ctx.strokeStyle= scenery.getHero().color; // DRAW RED HERO
         ctx.strokeRect(scenery.getHero().getPosition().x, 600 - scenery.getHero().getPosition().y, scenery.getHero().size.width, scenery.getHero().size.height);
 
-        ctx.strokeStyle='#AABB11'; // DRAW GREENISH GOAL
+        ctx.strokeStyle= scenery.getGoal().color; // DRAW GREENISH GOAL
         ctx.strokeRect(scenery.getGoal().getPosition().x, 600 - scenery.getGoal().getPosition().y, scenery.getGoal().size.width, scenery.getGoal().size.height);
 
         scenery._obstacles.forEach(function(obst){
-            ctx.strokeStyle='#FFBF00'; // DRAW YELLOW BORDERS
+            ctx.strokeStyle=obst.color; // DRAW YELLOW BORDERS
             ctx.strokeRect(obst.getPosition().x, obst.getPosition().y, obst.size.width, obst.size.height);
         });
     };
