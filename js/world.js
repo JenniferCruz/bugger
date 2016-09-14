@@ -88,6 +88,10 @@ World.prototype.getGoal = function(){
 //    '-': function(a, b){ return a - b;}
 //};
 
+World.prototype.getAllBoxes = function () {
+    var boxes = [];
+    return boxes.concat(this._evils).concat(this._hero).concat(this._goal).concat(this._obstacles);
+}
 
 /*
 * PLAYER LEFT ACTION
@@ -117,6 +121,7 @@ World.prototype._getMovingSpeedLeft = function(){
     }
     return moveSpeed;
 };
+
 
 World.prototype.leftAction = function(){
     var moveSpeed = this._getMovingSpeedLeft();

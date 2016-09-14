@@ -52,25 +52,9 @@ var game = function(){
 
 
     sceneryCanvas.draw = function() {
-
-        //scenery.forEach(function(box) {
-        //
-        //});
-
-        scenery.getEvils().forEach(function(character){
-            ctx.strokeStyle= character.color; // DRAW BLACK ENEMIES
-            ctx.strokeRect(character.getPosition().x, 600 - character.getPosition().y, character.size.width, character.size.height);
-        });
-
-        ctx.strokeStyle= scenery.getHero().color; // DRAW RED HERO
-        ctx.strokeRect(scenery.getHero().getPosition().x, 600 - scenery.getHero().getPosition().y, scenery.getHero().size.width, scenery.getHero().size.height);
-
-        ctx.strokeStyle= scenery.getGoal().color; // DRAW GREENISH GOAL
-        ctx.strokeRect(scenery.getGoal().getPosition().x, 600 - scenery.getGoal().getPosition().y, scenery.getGoal().size.width, scenery.getGoal().size.height);
-
-        scenery._obstacles.forEach(function(obst){
-            ctx.strokeStyle=obst.color; // DRAW YELLOW BORDERS
-            ctx.strokeRect(obst.getPosition().x, obst.getPosition().y, obst.size.width, obst.size.height);
+        scenery.getAllBoxes().forEach(function(box){
+            ctx.strokeStyle = box.color;
+            ctx.strokeRect(box.getPosition().x, 600 - box.getPosition().y, box.size.width, box.size.height);
         });
     };
 
