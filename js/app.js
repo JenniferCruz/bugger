@@ -9,7 +9,7 @@ var gameOver = function(){
     ctx.strokeStyle='#FF0000';
     ctx.stroke();
     ctx.fillStyle = '#AABB11';
-    ctx.rect(1, 1, 505, 506);
+    ctx.rect(1, 1, 505, 606);
     ctx.fill();
 
     ctx.font = '100px Lucida Sans Unicode';
@@ -67,9 +67,13 @@ var game = function(){
     };
 
     sceneryCanvas.keepDrawing = function() {
-        sceneryCanvas.draw();
-        sceneryCanvas.tick();
-        window.requestAnimationFrame(function(){ sceneryCanvas.keepDrawing();  });
+        if(scenery.isGameOn()){
+            sceneryCanvas.draw();
+            sceneryCanvas.tick();
+            window.requestAnimationFrame(function(){ sceneryCanvas.keepDrawing();  });
+        } else {
+            gameOver();
+        }
     };
 
     sceneryCanvas.keepDrawing();

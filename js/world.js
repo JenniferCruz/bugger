@@ -1,3 +1,4 @@
+var lives = 3;
 
 function World(obj) {
   this._hero = obj.hero;
@@ -50,6 +51,7 @@ World.prototype.heroCollidesWithEvils = function() {
     this._evils.forEach(function (evil) {
         if (hero.collides(evil)) {
             hero.setPosition(initialHeroPosition);
+            lives--;
         }
     });
 };
@@ -241,3 +243,10 @@ World.prototype.downAction = function(){
     this._hero.move({vx: 0, vy:-moveSpeed});
 };
 
+
+
+
+
+World.prototype.isGameOn = function(){
+    return lives > 0;
+};
