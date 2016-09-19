@@ -238,11 +238,33 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
         assert.deepEqual(world.getHero().getPosition(), {x: 100, y: 564});
     });
 
+    //QUnit.test('Scenery surrounded by obstacles', function(assert){
+    //    var player = Box.createBox({x:20, y: 50}, {width: 50, height: 50}, '#FF0000');
+    //    var enemy1 = Box.createBox({x:1, y: 300}, {width: 50, height: 50}, '#000');
+    //    var enemy2 = Box.createBox({x:1, y: 120}, {width: 50, height: 50}, '#000');
+    //    //enemy1.setVelocity({vx:2, vy: 0});
+    //    //enemy2.setVelocity({vx:0, vy: 0.5});
+    //    // borders
+    //    var horizontalTop = Box.createBox({x:2, y: -4}, {width:505, height:1}, '#FFBF00'); // amarillo
+    //    var verticalLeft = Box.createBox({x:0, y: 600}, {width:1, height:606}, '#FF4C05'); // rojo
+    //    var horizontalBottom = Box.createBox({x:2, y: 600}, {width:505, height:1}, '#B3C700'); // verde
+    //    var verticalRight = Box.createBox({x:505, y: 600}, {width:1, height:606}, '#30ADF0'); // azul
+    //    var world = new World({
+    //        initialHeroPosition: {x:1, y:1},
+    //        hero: player,
+    //        evils: [enemy1, enemy2],
+    //        goal: Box.createBox({x:200, y: 200}, {width: 50, height: 50}, '#AABB11'),
+    //        staticObjects: [horizontalTop, verticalLeft, horizontalBottom, verticalRight]
+    //    });
+    //
+    //    world.leftAction();
+    //    assert.deepEqual(world.getHero().getPosition(), {x: 0, y: 50});
+    //    world.leftAction();
+    //    assert.deepEqual(world.getHero().getPosition(), {x: 0, y: 50});
+    //});
+
 });
 
-
-
-//heroCollidesWithObstacles
 
 
 /**
