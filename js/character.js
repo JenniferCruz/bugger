@@ -7,7 +7,7 @@ function Box(point, size, color) {
     var obj = {};
     obj._position = point;
     obj.velocity = {vx: 0, vy: 0};
-    obj.size = size,// || {width: 50, height: 50};
+    obj.size = size || {width: 50, height: 50};
     obj.color = color;
 
     obj.move = function(incrementPosition) {

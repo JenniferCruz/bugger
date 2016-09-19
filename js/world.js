@@ -183,7 +183,7 @@ World.prototype._getObstaclesAboveYs = function(){
         var obstacleIsOnTheWay = (obst.getPosition().y + obst.size.height > player.getPosition().y) &&
             !(obst.getPosition().x + obst.size.width < player.getPosition().x || obst.getPosition().x > player.getPosition().x + player.size.width);
         if(obstacleIsOnTheWay){
-            obstaclesYs.push(obst.getPosition().y - obst.size.height);
+            obstaclesYs.push(obst.getPosition().y);
             obstAbove.push(obst);
         }
     });
@@ -193,7 +193,7 @@ World.prototype._getObstaclesAboveYs = function(){
 
 World.prototype._getMovingSpeedUp = function(){
     var closestObstacleY = Math.min.apply(null, this._getObstaclesAboveYs());
-    var moveSpeed = 20;//TODO: change this back to 20
+    var moveSpeed = 20;
 
     while(this._hero.getPosition().y + this._hero.size.height + moveSpeed >= closestObstacleY){
         moveSpeed--;
@@ -220,9 +220,10 @@ World.prototype._getObstaclesBelowYs = function(){
             !(obst.getPosition().x + obst.size.width < player.getPosition().x || obst.getPosition().x > player.getPosition().x + player.size.width);
 
         if(obstacleIsOnTheWay){
-            obstaclesYs.push(obst.getPosition().y);
+            obstaclesYs.push(obst.getPosition().y + obst.size.height);
         }
     });
+
     return obstaclesYs;
 };
 

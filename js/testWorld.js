@@ -27,12 +27,12 @@ I want to know when I reach the goal
 **/
 
 QUnit.test("Box reaches goal", function( assert ){
-  var character = Box.createBox({x: 20, y: 10});
+  var character = Box.createBox({x: 20, y: 10},  {width:50, height:50});
   var world = new World({
-    //initialHeroPosition: {x:20, y:10},
     hero: character,
     evils: [Box.createBox({x:0, y:150})],
-    goal: Box.createBox({x: 20, y: 80})
+    goal: Box.createBox({x: 20, y: 80},  {width:50, height:50}),
+    staticObjects: [Box.createBox({x: 450, y: 0}, {width:1, height:600})]
   });
   assert.notOk(world.isGoalReached());
   world.upAction();
@@ -46,13 +46,13 @@ QUnit.test("Box reaches goal", function( assert ){
  */
 
 QUnit.test("Enemies bounce off obstacles", function( assert ){
-  var enemy = Box.createBox({x:301, y:200});
+  var enemy = Box.createBox({x:301, y:200}, {width:50, height:50});
   enemy.setVelocity({vx:100, vy: 0});
 
   var world = new World({
-    hero: Box.createBox({x: 350, y: 0}),
+    hero: Box.createBox({x: 350, y: 0}, {width:50, height:50}),
     evils: [enemy],
-    goal: Box.createBox({x: 350, y: 500}),
+    goal: Box.createBox({x: 350, y: 500}, {width:50, height:50}),
     staticObjects: [Box.createBox({x: 450, y: 0}, {width:1, height:600})]
   });
 
@@ -86,9 +86,9 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
 
     QUnit.test('multiple obstacles in the left', function( assert ){
         var world = new World({
-            hero: Box.createBox({x: 80, y: 60}),
-            evils: [Box.createBox({x:0, y:500})],
-            goal: Box.createBox({x: 0, y: 400}),
+            hero: Box.createBox({x: 80, y: 60}, {width:50, height:50}),
+            evils: [Box.createBox({x:0, y:500}, {width:50, height:50})],
+            goal: Box.createBox({x: 0, y: 400}, {width:50, height:50}),
             staticObjects: [Box.createBox({x: 0, y: 0}, {width:1, height:606}),
                 Box.createBox({x: 500, y: 0}, {width:1, height:606}),
                 Box.createBox({x: 50, y: 60}, {width:5, height:5}),
@@ -139,17 +139,17 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
 
     QUnit.test('1 obstacle above', function( assert ){
         var world = new World({
-            hero: Box.createBox({x: 60, y: 555}),
+            hero: Box.createBox({x: 60, y: 515}),
             evils: [Box.createBox({x:0, y:0})],
             goal: Box.createBox({x: 0, y: 0}),
             staticObjects: [Box.createBox({x: 0, y: 600}, {width:500, height:1})]
         });
         world.upAction();
-        world.upAction();
-        assert.deepEqual(world.getHero().getPosition(), {x: 60, y: 595});
+        assert.deepEqual(world.getHero().getPosition(), {x: 60, y: 535});
 
         world.upAction();
-        assert.deepEqual(world.getHero().getPosition(), {x: 60, y: 598});
+        world.upAction();
+        assert.deepEqual(world.getHero().getPosition(), {x: 60, y: 549});
     });
 
     QUnit.test('multiple obstacles above', function( assert ){
@@ -179,15 +179,18 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
         });
         world.downAction();
         world.downAction();
+
         assert.deepEqual(world.getHero().getPosition(), {x: 60, y: 55});
 
         world.downAction();
-        assert.deepEqual(world.getHero().getPosition(), {x: 60, y: 51});
+        world.downAction();
+        world.downAction();
+        assert.deepEqual(world.getHero().getPosition(), {x: 60, y: 2});
     });
 
     QUnit.test('multiple obstacles below', function( assert ){
         var world = new World({
-            hero: Box.createBox({x: 250, y: 280}),
+            hero: Box.createBox({x: 250, y: 310}),
             evils: [Box.createBox({x:0, y:600})],
             goal: Box.createBox({x: 0, y: 400}),
             staticObjects: [Box.createBox({x: 0, y: 0}, {width:500, height:6}),
@@ -197,8 +200,10 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
                 Box.createBox({x: 250, y: 200}, {width:100, height:50})]
         });
         world.downAction();
-        assert.deepEqual(world.getHero().getPosition(), {x: 250, y: 260});
         world.downAction();
+        assert.deepEqual(world.getHero().getPosition(), {x: 250, y: 270});
+        world.downAction();
+        world.downAction();// additional / no effect
         assert.deepEqual(world.getHero().getPosition(), {x: 250, y: 251});
     });
 
@@ -226,62 +231,36 @@ QUnit.module('Player cannot pass through obstacles', function( assert ){
         // 6 steps up
         world.upAction();world.upAction();world.upAction();
         world.upAction();world.upAction();world.upAction();
-        assert.deepEqual(world.getHero().getPosition(), {x: 80, y: 570});
+        assert.deepEqual(world.getHero().getPosition(), {x: 80, y: 555});
         world.rightAction();
-        assert.deepEqual(world.getHero().getPosition(), {x: 100, y: 570});
+        assert.deepEqual(world.getHero().getPosition(), {x: 100, y: 555});
         // 4 steps up - last ones should have no effect
-        //world.upAction();world.upAction();world.upAction();world.upAction();
         world.upAction();world.upAction();world.upAction();world.upAction();
-        assert.deepEqual(world.getHero().getPosition(), {x: 100, y: 604});
+        assert.deepEqual(world.getHero().getPosition(), {x: 100, y: 555});
         // a few steps down just to check
         world.downAction();world.downAction();
-        assert.deepEqual(world.getHero().getPosition(), {x: 100, y: 564});
+        assert.deepEqual(world.getHero().getPosition(), {x: 100, y: 515});
     });
 
-    //QUnit.test('Scenery surrounded by obstacles', function(assert){
-    //    var player = Box.createBox({x:20, y: 50}, {width: 50, height: 50}, '#FF0000');
-    //    var enemy1 = Box.createBox({x:1, y: 300}, {width: 50, height: 50}, '#000');
-    //    var enemy2 = Box.createBox({x:1, y: 120}, {width: 50, height: 50}, '#000');
-    //    //enemy1.setVelocity({vx:2, vy: 0});
-    //    //enemy2.setVelocity({vx:0, vy: 0.5});
-    //    // borders
-    //    var horizontalTop = Box.createBox({x:2, y: -4}, {width:505, height:1}, '#FFBF00'); // amarillo
-    //    var verticalLeft = Box.createBox({x:0, y: 600}, {width:1, height:606}, '#FF4C05'); // rojo
-    //    var horizontalBottom = Box.createBox({x:2, y: 600}, {width:505, height:1}, '#B3C700'); // verde
-    //    var verticalRight = Box.createBox({x:505, y: 600}, {width:1, height:606}, '#30ADF0'); // azul
-    //    var world = new World({
-    //        initialHeroPosition: {x:1, y:1},
-    //        hero: player,
-    //        evils: [enemy1, enemy2],
-    //        goal: Box.createBox({x:200, y: 200}, {width: 50, height: 50}, '#AABB11'),
-    //        staticObjects: [horizontalTop, verticalLeft, horizontalBottom, verticalRight]
-    //    });
-    //
-    //    world.leftAction();
-    //    assert.deepEqual(world.getHero().getPosition(), {x: 0, y: 50});
-    //    world.leftAction();
-    //    assert.deepEqual(world.getHero().getPosition(), {x: 0, y: 50});
-    //});
+    QUnit.test('Scenery surrounded by obstacles', function(assert){
+        var horizontalTop = Box.createBox({x:2, y: -4}, {width:505, height:1}, '#FFBF00'); // amarillo
+        var verticalLeft = Box.createBox({x:0, y: 0}, {width:1, height:606}, '#FF4C05'); // rojo
+        var horizontalBottom = Box.createBox({x:2, y: 600}, {width:505, height:1}, '#B3C700'); // verde
+        var verticalRight = Box.createBox({x:505, y: 0}, {width:1, height:606}, '#30ADF0'); // azul
+
+        var world = new World({
+            hero: Box.createBox({x:20, y: 50}, {width: 50, height: 50}, '#FF0000'),
+            evils: [Box.createBox({x:1, y: 300}, {width: 50, height: 50}, '#000'),
+                Box.createBox({x:1, y: 120}, {width: 50, height: 50}, '#000')],
+            goal: Box.createBox({x:200, y: 200}, {width: 50, height: 50}, '#AABB11'),
+            staticObjects: [horizontalTop, verticalLeft, horizontalBottom, verticalRight]
+        });
+
+        world.leftAction();
+        assert.deepEqual(world.getHero().getPosition(), {x: 2, y: 50});
+        world.leftAction();
+        assert.deepEqual(world.getHero().getPosition(), {x: 2, y: 50});
+    });
 
 });
 
-
-
-/**
-As the scenery painter
-I want to access all properties of World
-**//*
-QUnit.test("World properties can be accessed", function( assert ){
-  var character = Box.createBox({x: 0, y: 0});
-  var world = new World({
-    initialHeroPosition: character.getPosition(),
-    hero: character,
-    evils: [Box.createBox({x:0, y:150})],
-    goal: Box.createBox({x: 20, y: 70})
-  });
-
-  assert.deepEqual(world.getEvils(), [Box.createBox({x:0, y:150})]);
-  assert.deepEqual(world.getHero(), Box.createBox({x: 0, y: 0}));
-  assert.deepEqual(world.getInitialHeroPosition(), {x:0, y:0});
-  assert.deepEqual(world.getGoal(), Box.createBox({x: 20, y: 70}));*/
-/*});*/

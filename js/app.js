@@ -38,14 +38,14 @@ var game = function(){
     var verticalLeft = Box.createBox({x:1, y: 0}, {width:1, height:606}, '#FF4C05'); // rojo
     var horizontalBottom = Box.createBox({x:0, y: 600}, {width:505, height:1}, '#B3C700'); // verde
     var verticalRight = Box.createBox({x:505, y: 0}, {width:1, height:606}, '#30ADF0'); // azul
+    var test = Box.createBox({x: 250, y: 200}, {width:100, height:81}, '#6C0091'); // azul
 
     // world
     var scenery = new World({
-        initialHeroPosition: {x:1, y:1},
         hero: player,
         evils: [human, human2],
         goal: Box.createBox({x:200, y: 200}, {width: 50, height: 50}, '#AABB11'),
-        staticObjects: [horizontalTop, verticalLeft, horizontalBottom, verticalRight]
+        staticObjects: [horizontalTop, verticalLeft, horizontalBottom, verticalRight, test]
     });
 
     // scenery is a singleton, so an object is created
