@@ -6,6 +6,19 @@ function World(obj) {
   this._initialHeroPosition = obj.hero.getPosition();
   this._goal = obj.goal;
   this._obstacles = obj.staticObjects || [];
+  this._decor = [];
+
+  for(var i = 0; i < obj.decor.length; i++){
+      var decorSet = obj.decor[i];
+      for(var j = 0; j < decorSet.qty; j++){
+          var box = Box.createBox({x: (decorSet.x + j*60), y: decorSet.y}, {width: decorSet.width || 60, height: decorSet.height || 80}, decorSet.sprite);
+          if(decorSet.isObstacle === true)
+              this._obstacles.push(box);
+          else{
+              this._decor.push(box);
+          }
+      }
+  }
 }
 
 
@@ -93,7 +106,7 @@ World.prototype.getGoal = function(){
 
 World.prototype.getAllBoxes = function () {
     var boxes = [];
-    return boxes.concat(this._evils).concat(this._hero).concat(this._goal).concat(this._obstacles);
+    return boxes.concat(this._decor).concat(this._obstacles).concat(this._goal).concat(this._evils).concat(this._hero);
 }
 
 /*
@@ -111,6 +124,8 @@ World.prototype._getObstaclesOnTheLeft = function(){
         if(obstacleIsOnTheWay){
             obstaclesXs.push(obst.getPosition().x + obst.size.width);
             obstaclesOnTheLeft.push(obst);
+            console.log(obst);
+
         }
     });
   return obstaclesXs;
@@ -222,6 +237,7 @@ World.prototype._getObstaclesBelowYs = function(){
             !(obst.getPosition().x + obst.size.width < player.getPosition().x || obst.getPosition().x > player.getPosition().x + player.size.width);
 
         if(obstacleIsOnTheWay){
+            console.log(obst);
             obstaclesYs.push(obst.getPosition().y + obst.size.height);
         }
     });
