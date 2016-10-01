@@ -1,4 +1,4 @@
-var lives = 3;
+var lives = 5;
 
 function World(obj) {
   this._hero = obj.hero;
@@ -11,7 +11,7 @@ function World(obj) {
   for(var i = 0; i < obj.decor.length; i++){
       var decorSet = obj.decor[i];
       for(var j = 0; j < decorSet.qty; j++){
-          var box = Box.createBox({x: (decorSet.x + j*60), y: decorSet.y}, {width: decorSet.width || 60, height: decorSet.height || 80}, decorSet.sprite);
+          var box = Box.createBox({x: (decorSet.x + j*decorSet.width), y: decorSet.y}, {width: decorSet.width || 60, height: decorSet.height || 80}, decorSet.sprite);
           if(decorSet.isObstacle === true)
               this._obstacles.push(box);
           else{
@@ -157,7 +157,7 @@ World.prototype.leftAction = function(){
 
 World.prototype._getRightObstaclesXs = function(){
     var obstaclesXs = [];
-    var obstaclesOnTheRight = [];
+    //var obstaclesOnTheRight = [];
     var player = this._hero;
 
     this._obstacles.forEach(function(obst){
@@ -166,7 +166,7 @@ World.prototype._getRightObstaclesXs = function(){
 
         if(obstacleIsOnTheWay){
             obstaclesXs.push(obst.getPosition().x);
-            obstaclesOnTheRight.push(obst);
+            //obstaclesOnTheRight.push(obst);
         }
     });
     return obstaclesXs;
@@ -198,6 +198,10 @@ _obstacleWidthOverlapsPlayer  = function(obstacle, player){
     return obstacle.getPosition().x + obstacle.size.width < player.getPosition().x
         || obstacle.getPosition().x > player.getPosition().x + player.size.width;
 };
+//_obstacleWidthOverlapsPlayer  = function(obstacle, player){
+//    return obstacle.getPosition().x + obstacle.size.width < player.getPosition().x
+//        || obstacle.getPosition().x > player.getPosition().x + player.size.width;
+//};
 
 World.prototype._getObstaclesBelowYs = function(){
     var obstaclesYs = [];

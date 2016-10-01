@@ -2,9 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="42e5f3e6-662b-4ed1-beb3-aa038cbe5872" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/bush.png" afterPath="$PROJECT_DIR$/images/bush.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/cinderella-shoe.png" afterPath="$PROJECT_DIR$/images/cinderella-shoe.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/foot.png" afterPath="$PROJECT_DIR$/images/foot.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/loafer.png" afterPath="$PROJECT_DIR$/images/loafer.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/rubber-sandals.png" afterPath="$PROJECT_DIR$/images/rubber-sandals.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/tennis.png" afterPath="$PROJECT_DIR$/images/tennis.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/images/tulips.png" afterPath="$PROJECT_DIR$/images/tulips.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/app.js" afterPath="$PROJECT_DIR$/js/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/js/world.js" afterPath="$PROJECT_DIR$/js/world.js" />
     </list>
     <ignored path="sentinela-frogger.iws" />
@@ -51,9 +55,11 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.16757345">
-              <caret line="85" column="110" selection-start-line="85" selection-start-column="110" selection-end-line="85" selection-end-column="110" />
-              <folding />
+            <state vertical-scroll-proportion="0.48095757">
+              <caret line="38" column="3" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -62,7 +68,7 @@
         <entry file="file://$PROJECT_DIR$/js/world.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="125" column="56" selection-start-line="125" selection-start-column="56" selection-end-line="125" selection-end-column="56" />
+              <caret line="45" column="57" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -264,7 +270,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.10364583" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -692,16 +698,18 @@
     <entry file="file://$PROJECT_DIR$/js/world.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="125" column="56" selection-start-line="125" selection-start-column="56" selection-end-line="125" selection-end-column="56" />
+          <caret line="45" column="57" selection-start-line="45" selection-start-column="57" selection-end-line="45" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.16757345">
-          <caret line="85" column="110" selection-start-line="85" selection-start-column="110" selection-end-line="85" selection-end-column="110" />
-          <folding />
+        <state vertical-scroll-proportion="0.48095757">
+          <caret line="38" column="3" selection-start-line="38" selection-start-column="3" selection-end-line="38" selection-end-column="3" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
