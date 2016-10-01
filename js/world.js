@@ -112,6 +112,10 @@ World.prototype.getAllBoxes = function () {
 /*
 * PLAYER LEFT ACTION
 * */
+_obstacleHeightOverlapsPlayer  = function(obstacle, player){
+    return obstacle.getPosition().y + obstacle.size.height < player.getPosition().y
+        || obstacle.getPosition().y > player.getPosition().y + player.size.height;
+};
 
 World.prototype._getObstaclesOnTheLeft = function(){
     var obstaclesXs = [];
@@ -119,13 +123,11 @@ World.prototype._getObstaclesOnTheLeft = function(){
     var player = this._hero;
     this._obstacles.forEach(function(obst){
         var obstacleIsOnTheWay = (obst.getPosition().x + obst.size.width < player.getPosition().x) &&
-            !(obst.getPosition().y + obst.size.height < player.getPosition().y || obst.getPosition().y > player.getPosition().y + player.size.height);
+            !_obstacleHeightOverlapsPlayer(obst, player);
 
         if(obstacleIsOnTheWay){
             obstaclesXs.push(obst.getPosition().x + obst.size.width);
             obstaclesOnTheLeft.push(obst);
-            console.log(obst);
-
         }
     });
   return obstaclesXs;
@@ -152,6 +154,7 @@ World.prototype.leftAction = function(){
 /*
 * PLAYER RIGHT ACTION
 * */
+
 World.prototype._getRightObstaclesXs = function(){
     var obstaclesXs = [];
     var obstaclesOnTheRight = [];
@@ -159,7 +162,7 @@ World.prototype._getRightObstaclesXs = function(){
 
     this._obstacles.forEach(function(obst){
         var obstacleIsOnTheWay = (obst.getPosition().x > player.size.width + player.getPosition().x) &&
-            !(obst.getPosition().y + obst.size.height < player.getPosition().y || obst.getPosition().y > player.getPosition().y + player.size.height);
+            !(_obstacleHeightOverlapsPlayer(obst, player));
 
         if(obstacleIsOnTheWay){
             obstaclesXs.push(obst.getPosition().x);
@@ -187,57 +190,61 @@ World.prototype.rightAction = function(){
 
 
 /*
- * PLAYER UP ACTION
+ * PLAYER DOWN ACTION
  * */
 
 
-World.prototype._getObstaclesAboveYs = function(){
+_obstacleWidthOverlapsPlayer  = function(obstacle, player){
+    return obstacle.getPosition().x + obstacle.size.width < player.getPosition().x
+        || obstacle.getPosition().x > player.getPosition().x + player.size.width;
+};
+
+World.prototype._getObstaclesBelowYs = function(){
     var obstaclesYs = [];
-    var obstAbove = [];
+    var obstOnTheWay = [];
     var player = this._hero;
 
     this._obstacles.forEach(function(obst){
-        var obstacleIsOnTheWay = (obst.getPosition().y + obst.size.height > player.getPosition().y) &&
-            !(obst.getPosition().x + obst.size.width < player.getPosition().x || obst.getPosition().x > player.getPosition().x + player.size.width);
+        var overlap = 0; // <|
+        var obstacleIsOnTheWay = (obst.getPosition().y + obst.size.height - overlap > player.getPosition().y) &&
+            !_obstacleWidthOverlapsPlayer(obst, player);
         if(obstacleIsOnTheWay){
             obstaclesYs.push(obst.getPosition().y);
-            obstAbove.push(obst);
+            obstOnTheWay.push(obst);
         }
     });
     return obstaclesYs;
 };
 
 
-World.prototype._getMovingSpeedUp = function(){
-    var closestObstacleY = Math.min.apply(null, this._getObstaclesAboveYs());
+World.prototype._getMovingSpeedDown = function(){
+    var closestObstacleY = Math.min.apply(null, this._getObstaclesBelowYs());
     var moveSpeed = 20;
-
-    while(this._hero.getPosition().y + this._hero.size.height + moveSpeed >= closestObstacleY){
+    var overlap = 0; // <<|
+    while(this._hero.getPosition().y + this._hero.size.height - overlap + moveSpeed >= closestObstacleY){
         moveSpeed--;
     }
     return moveSpeed;
 };
 
 
-World.prototype.upAction = function(){
-    var moveSpeed = this._getMovingSpeedUp();
+World.prototype.downAction = function(){
+    var moveSpeed = this._getMovingSpeedDown();
     this._hero.move({vx: 0, vy:moveSpeed});
 };
 
-
 /*
- * PLAYER DOWN ACTION
+ * PLAYER UP ACTION
  * */
-World.prototype._getObstaclesBelowYs = function(){
+World.prototype._getObstaclesAboveYs = function(){
     var obstaclesYs = [];
     var player = this._hero;
 
     this._obstacles.forEach(function(obst){
         var obstacleIsOnTheWay = (obst.getPosition().y < player.getPosition().y + player.size.height) &&
-            !(obst.getPosition().x + obst.size.width < player.getPosition().x || obst.getPosition().x > player.getPosition().x + player.size.width);
+            !(_obstacleWidthOverlapsPlayer(obst, player));
 
         if(obstacleIsOnTheWay){
-            console.log(obst);
             obstaclesYs.push(obst.getPosition().y + obst.size.height);
         }
     });
@@ -245,8 +252,8 @@ World.prototype._getObstaclesBelowYs = function(){
     return obstaclesYs;
 };
 
-World.prototype._getMovingSpeedDown = function(){
-    var closestObstacleY = Math.max.apply(null, this._getObstaclesBelowYs());
+World.prototype._getMovingSpeedUp = function(){
+    var closestObstacleY = Math.max.apply(null, this._getObstaclesAboveYs());
     var moveSpeed = 20;
     while(this._hero.getPosition().y - moveSpeed <= closestObstacleY){
         moveSpeed--;
@@ -254,12 +261,10 @@ World.prototype._getMovingSpeedDown = function(){
     return moveSpeed;
 };
 
-World.prototype.downAction = function(){
-    var moveSpeed = this._getMovingSpeedDown();
+World.prototype.upAction = function(){
+    var moveSpeed = this._getMovingSpeedUp();
     this._hero.move({vx: 0, vy:-moveSpeed});
 };
-
-
 
 
 
