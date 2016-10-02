@@ -1,14 +1,41 @@
-// TODO: [required] Add functionality when goal is reached / WINNING RESULT!
-// TODO: [optional] Add sound effect on collisions with shoes
+// TODO: [required] Add read.me
+// TODO: [optional] Style winning screen
+// TODO: [optional] Change sounds
 // TODO: [optional] Display how many lives are left
 // TODO: [required] Style game over screen
 // TODO: [optional] Add 2 or 3 additional levels
 
+function getAvatar(){
+    var urlParams = window.location.search;
+    return urlParams.split("=")[1] || 'snail';
+}
+
+function getAvatarDimensionsRatios(avatar){
+    var ratios = [1,1];
+    if(avatar == 'ladybug'){
+        ratios = [.9, 1];
+    }
+    if(avatar == 'grasshopper'){
+        ratios = [1,.51];
+    }
+    if(avatar == 'snail'){
+        ratios = [1,.75];
+    }
+    if(avatar == 'spider'){
+        ratios = [1,.9];
+    }
+    return ratios;
+}
 
 var canvas = document.querySelector('canvas'),
     ctx = canvas.getContext('2d');
 
 Resources.load([
+    'images/player_snail.png',
+    'images/player_grasshopper.png',
+    'images/player_snake.png',
+    'images/player_spider.png',
+    'images/player_ladybug.png',
     'images/boat-2.png',
     'images/bush.png',
     'images/cave_2.png',
@@ -35,28 +62,39 @@ Resources.load([
     'images/bonfire.png',
     'images/tulips.png',
     'images/tulips_top.png',
-    'images/water-block.png'
+    'images/water-block.png',
+    'images/game-over.png',
+    'images/dead.png',
+    'images/award.png'
 ]);
 
+
+var gameOverSound = new Sound('audio/fail.wav');
 var gameOver = function(){
-    ctx.strokeStyle='#FF0000';
-    ctx.stroke();
-    ctx.fillStyle = '#AABB11';
-    ctx.rect(1, 1, 505, 606);
-    ctx.fill();
-
-    ctx.font = '100px Lucida Sans Unicode';
+    gameOverSound.play();
     ctx.fillStyle = '#000';
-    ctx.fillText('Game',120,200);
-    ctx.fillText('Over',150,300);
-}
+    ctx.rect(0, 0, 505, 606);
+    ctx.fill();
+    ctx.drawImage(Resources.get('images/dead.png'), 2,  10, 300, 300);
+    ctx.font = '80px Lucida Sans Unicode';
+    ctx.fillStyle = '#fff';
+    ctx.fillText('Game',170,350);
+    ctx.fillText('Over',200,420);
+};
 
+var winningSound = new Sound('audio/success.wav');
+var youWin = function () {
+    winningSound.play();
+    ctx.drawImage(Resources.get('images/award.png'), 70,  47, 365, 512);
+};
 
 var game = function(){
 
     // Variables to set up scenery
     // hero
-    var player = Box.createBox({x:30, y: 520}, {width: 50, height: 50}, 'images/player_bee.png');
+    var avatar = 'images/player_' + getAvatar() + '.png';
+    var ratios = getAvatarDimensionsRatios(getAvatar());
+    var player = Box.createBox({x:30, y: 520}, {width: (50*ratios[0]), height: (50*ratios[1])}, avatar);
 
     // enemies
     var human = Box.createBox({x:21, y: 230}, {width: 50, height: 19}, 'images/rubber-sandals.png');
@@ -134,7 +172,9 @@ var game = function(){
             sceneryCanvas.draw();
             sceneryCanvas.tick();
             window.requestAnimationFrame(function(){ sceneryCanvas.keepDrawing();  });
-        } else {
+        } else if(scenery.isPlayerOnGoal()){
+            youWin();
+        }else {
             gameOver();
         }
     };

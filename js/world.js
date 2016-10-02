@@ -1,4 +1,30 @@
-var lives = 5;
+
+/* http://www.w3schools.com/games/game_sound.asp */
+/* Hit sound https://www.freesound.org/people/Robinhood76/sounds/92736/ */
+/* Success https://www.freesound.org/people/fins/sounds/171671/ */
+/* jumping https://www.freesound.org/people/fins/sounds/146726/ */
+/* sword https://www.freesound.org/people/JoelAudio/sounds/77611/ */
+/* bug https://www.freesound.org/people/sandyrb/sounds/35640/
+/* fruit https://www.freesound.org/people/metekavruk/sounds/348271/
+/* fail https://www.freesound.org/people/davidbain/sounds/135831/
+/* */
+function Sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+        this.sound.play();
+    };
+    this.stop = function(){
+        this.sound.pause();
+    };
+}
+
+var lives = 1;
+var hitSound = new Sound('audio/jumping.wav');
 
 function World(obj) {
   this._hero = obj.hero;
@@ -54,7 +80,7 @@ World.prototype.evilCollidesWithObstacles = function () {
 World.prototype._detectCollitions = function() {
     this.heroCollidesWithEvils();
     this.evilCollidesWithObstacles();
-    this.managePlayer();
+    this.isPlayerOnGoal();
 };
 
 
@@ -64,16 +90,18 @@ World.prototype.heroCollidesWithEvils = function() {
     this._evils.forEach(function (evil) {
         if (hero.collides(evil)) {
             hero.setPosition(initialHeroPosition);
+            hitSound.play();
             lives--;
         }
     });
 };
 
 
-World.prototype.managePlayer = function(){
+World.prototype.isPlayerOnGoal = function(){
   if(this._hero.collides(this._goal)){
-      console.log('Reached goal! What now?');
+      return true;
   }
+  return false;
 };
 
 
@@ -273,5 +301,5 @@ World.prototype.upAction = function(){
 
 
 World.prototype.isGameOn = function(){
-    return lives > 0;
+    return lives > 0 && !this.isPlayerOnGoal();
 };
