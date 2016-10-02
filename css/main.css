@@ -1,20 +1,58 @@
-
 body {
-    width: 620px;
-    margin-left: auto;
-    margin-right: auto;
-    font-family: 'Gloria Hallelujah', cursive;
-    background-color: #000;
+  width: 620px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: "Gloria Hallelujah", cursive;
+  background-color: #000;
 }
 
-.white {
+
+a {
+  color: #ffcb00;
+  text-decoration: none;
+}
+
+
+section {
+  padding: 0;
+}
+
+
+h2,
+p {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+
+footer a {
+  color: #999;
+  margin-top: 20px;
+  font-size: 10px;
+}
+
+
+aside {
+  float: right;
   color: #fff;
 }
 
-.white a {
-  text-decoration: none;
-  color: #ffcb00;
+
+.lives span {
+  padding: 15px;
+  font-size: 25px;
 }
+
+
+.live-heart {
+  width: 30px;
+}
+
+
+.credits img {
+  width: 40px;
+}
+
 
 .content {
   background-color: #fff;
@@ -22,29 +60,6 @@ body {
   padding: 0 15px 10px 15px;
 }
 
-.warning {
-    padding-top: 20px;
-    font-size: 0.7em;
-    color: red;
-}
-
-
-footer a {
-  text-decoration: none;
-  color: #999;
-  margin-top: 20px;
-  font-size: 10px;
-}
-
-section {
-  padding: 0;
-}
-
-h2,
-p {
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
 
 .container {
   display: flex;
@@ -53,41 +68,61 @@ p {
   padding-bottom: 0;
 }
 
+
 .bucket {
   padding-left: 10px;
   padding-right: 10px;
 }
 
+
 .hidden {
-    display: none;
+  display: none;
 }
+
+
+.white-content {
+  color: #fff;
+}
+
+
+.warning {
+  padding-top: 20px;
+  font-size: 0.7em;
+  color: red;
+}
+
 
 .player-choice {
   width: 85px;
 }
 
+
 .player-choices {
   text-align: center;
 }
 
-.play-btn a {
-  width: 100%;
-  padding: 10px 200px;
-  color: #333333;
+
+/* http://stackoverflow.com/questions/710089/how-do-i-make-an-html-link-look-like-a-button */
+.play-btn {
+  color: #333;
+  font-weight: bold;
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: bold;
-  background-color: #EEEEEE;
-  border-right: 1px solid #333333;
-  border-bottom: 1px solid #333333;
-  border-left: 1px solid #CCCCCC;
+  width: 100%;
+  padding: 10px 200px;
+  background-color: #eee;
+  border-right: 1px solid #333;
+  border-bottom: 1px solid #333;
+  border-left: 1px solid #ccc;
   border-radius: 10px;
 }
 
-.play-btn {
+
+.play-area {
   text-align: center;
   margin-top: 20px;
 }
+
 
 .selected {
   border: 2px solid #090;
@@ -96,45 +131,31 @@ p {
   padding: 10px;
 }
 
-.credits img {
-  width: 40px;
-}
-
-aside {
-  float: right;
-  color: #fff;
-}
-
-.lives img {
-  width: 30px;
-}
-
-.lives span {
-    padding: 15px;
-    font-size: 25px;
-}
 
 @media screen and (max-width: 700px) {
   body {
     width: 100%;
   }
 
+
   section {
     padding: 20px;
   }
+
 
   .content {
     border-radius: 0;
   }
 }
 
+
 @media screen and (max-width: 500px) {
   .player-choice {
     width: 200px;
   }
 
-  .play-btn a {
+
+  .play-btn {
     padding: 10px 100px;
   }
-
 }
