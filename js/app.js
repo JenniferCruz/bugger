@@ -1,10 +1,6 @@
 // TODO: [required] Add read.me
-// TODO: [optional] Change sounds
-// TODO: [optional] Style winning screen
-// TODO: [optional] Style game over screen
 // TODO: [optional] Add 2 or 3 additional levels
-// TODO: change img alt texts in images. Include only images used.
-
+// TODO: [optional] spritesheet to animate movement of shoes and bugs http://stackoverflow.com/questions/3062229/animated-gif-in-html5-canvas
 
 function getAvatar(){
     var urlParams = window.location.search;
@@ -37,54 +33,44 @@ Resources.load([
     'images/player_snake.png',
     'images/player_spider.png',
     'images/player_ladybug.png',
-    'images/boat-2.png',
     'images/bush.png',
     'images/cave_2.png',
-    'images/char-boy.png',
-    'images/fence_right.png',
     'images/fence_left.png',
     'images/fountain.png',
     'images/fence_2.png',
     'images/forest_2.png',
     'images/grass-block.png',
-    'images/grass.png',
-    'images/high-heels.png',
     'images/cinderella-shoe.png',
     'images/boot.png',
+    'images/boot.gif',
     'images/foot.png',
     'images/rubber-sandals.png',
     'images/tennis.png',
     'images/loafer.png',
-    'images/log.png',
-    'images/mushroom.png',
     'images/player_bee.png',
     'images/player_grasshopper.png',
     'images/stone-block.png',
     'images/bonfire.png',
     'images/tulips.png',
-    'images/tulips_top.png',
     'images/water-block.png',
-    'images/game-over.png',
     'images/heart.png',
     'images/dead.png',
     'images/award.png'
 ]);
 
 
-var gameOverSound = new Sound('audio/fail.wav');
 var gameOver = function(){
     gameOverSound.play();
     ctx.fillStyle = '#000';
     ctx.rect(0, 0, 505, 606);
     ctx.fill();
-    ctx.drawImage(Resources.get('images/dead.png'), 2,  10, 300, 300);
+    ctx.drawImage(Resources.get('images/dead.png'), 52,  60, 300, 300);
     ctx.font = '80px "Lucida Sans Unicode"';
     ctx.fillStyle = '#fff';
-    ctx.fillText('Game',170,350);
-    ctx.fillText('Over',200,420);
+    ctx.fillText('Game',220,400);
+    ctx.fillText('Over',250,470);
 };
 
-var winningSound = new Sound('audio/success.wav');
 var youWin = function () {
     winningSound.play();
     ctx.globalAlpha=0.6;
@@ -111,7 +97,7 @@ var game = function(){
     human2.setVelocity({vx:1, vy: 0});
     var human3 = Box.createBox({x:25, y: 45}, {width: 50, height: 44}, 'images/cinderella-shoe.png');
     human3.setVelocity({vx:0.4, vy: 0});
-    var human4 = Box.createBox({x:200, y: 100}, {width: 50, height: 50}, 'images/boot.png');
+    var human4 = Box.createBox({x:200, y: 100}, {width: 50, height: 50}, 'images/boot.gif');
     human4.setVelocity({vx:1, vy: 0});
     var human5 = Box.createBox({x:200, y: 250}, {width: 50, height: 30}, 'images/foot.png');
     human5.setVelocity({vx:1, vy: 0});
@@ -160,13 +146,9 @@ var game = function(){
 
 
     sceneryCanvas.draw = function() {
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'blue';
         ctx.fillRect(0, 0, 505, 606);
-        //console.log(scenery.getAllBoxes());
         scenery.getAllBoxes().forEach(function(box){
-            //ctx.strokeStyle = box.color;
-            //ctx.strokeRect(box.getPosition().x, (600 - box.getPosition().y - box.size.height), box.size.width, box.size.height);
-            //ctx.strokeRect(box.getPosition().x, (600 - box.getPosition().y), 5, 5);
             ctx.drawImage(Resources.get(box.color), box.getPosition().x,  box.getPosition().y, box.size.width, box.size.height);
         });
     };

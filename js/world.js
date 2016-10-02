@@ -1,13 +1,5 @@
 
 /* http://www.w3schools.com/games/game_sound.asp */
-/* Hit sound https://www.freesound.org/people/Robinhood76/sounds/92736/ */
-/* Success https://www.freesound.org/people/fins/sounds/171671/ */
-/* jumping https://www.freesound.org/people/fins/sounds/146726/ */
-/* sword https://www.freesound.org/people/JoelAudio/sounds/77611/ */
-/* bug https://www.freesound.org/people/sandyrb/sounds/35640/
-/* fruit https://www.freesound.org/people/metekavruk/sounds/348271/
-/* fail https://www.freesound.org/people/davidbain/sounds/135831/
-/* */
 function Sound(src) {
     this.sound = document.createElement("audio");
     this.sound.src = src;
@@ -23,8 +15,13 @@ function Sound(src) {
     };
 }
 
-var lives = 2;
-var hitSound = new Sound('audio/jumping.wav');
+var lives = 4;
+var hitSound1 = new Sound('audio/dirt.wav');
+var hitSound2 = new Sound('audio/minion_hit.wav');
+var hitSound3 = new Sound('audio/bug.wav');
+var hitSounds = [hitSound1, hitSound2, hitSound3];
+var winningSound = new Sound('audio/achievement.wav');
+var gameOverSound = new Sound('audio/fail.wav');
 
 function World(obj) {
   this._hero = obj.hero;
@@ -90,7 +87,7 @@ World.prototype.heroCollidesWithEvils = function() {
     this._evils.forEach(function (evil) {
         if (hero.collides(evil)) {
             hero.setPosition(initialHeroPosition);
-            hitSound.play();
+            hitSounds[(lives%3)].play();
             lives--;
         }
     });
