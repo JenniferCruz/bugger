@@ -23,7 +23,7 @@ function Sound(src) {
     };
 }
 
-var lives = 1;
+var lives = 2;
 var hitSound = new Sound('audio/jumping.wav');
 
 function World(obj) {

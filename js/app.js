@@ -1,9 +1,10 @@
 // TODO: [required] Add read.me
-// TODO: [optional] Display how many lives are left
 // TODO: [optional] Change sounds
 // TODO: [optional] Style winning screen
 // TODO: [optional] Style game over screen
 // TODO: [optional] Add 2 or 3 additional levels
+// TODO: change img alt texts in images. Include only images used.
+
 
 function getAvatar(){
     var urlParams = window.location.search;
@@ -64,6 +65,7 @@ Resources.load([
     'images/tulips_top.png',
     'images/water-block.png',
     'images/game-over.png',
+    'images/heart.png',
     'images/dead.png',
     'images/award.png'
 ]);
@@ -171,6 +173,7 @@ var game = function(){
 
     sceneryCanvas.tick = function() {
         scenery.tick();
+        document.getElementById('player_lives').innerHTML = lives;
     };
 
     sceneryCanvas.keepDrawing = function() {
