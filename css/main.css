@@ -11,6 +11,11 @@ body {
   color: #fff;
 }
 
+.white a {
+  text-decoration: none;
+  color: #ffcb00;
+}
+
 .content {
   background-color: #fff;
   border-radius: 8px;
@@ -82,6 +87,10 @@ p {
   background-color: #fc0;
   border-radius: 5px;
   padding: 10px;
+}
+
+.credits img {
+  width: 40px;
 }
 
 @media screen and (max-width: 700px) {

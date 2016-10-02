@@ -1,8 +1,8 @@
 // TODO: [required] Add read.me
-// TODO: [optional] Style winning screen
-// TODO: [optional] Change sounds
 // TODO: [optional] Display how many lives are left
-// TODO: [required] Style game over screen
+// TODO: [optional] Change sounds
+// TODO: [optional] Style winning screen
+// TODO: [optional] Style game over screen
 // TODO: [optional] Add 2 or 3 additional levels
 
 function getAvatar(){
@@ -76,7 +76,7 @@ var gameOver = function(){
     ctx.rect(0, 0, 505, 606);
     ctx.fill();
     ctx.drawImage(Resources.get('images/dead.png'), 2,  10, 300, 300);
-    ctx.font = '80px Lucida Sans Unicode';
+    ctx.font = '80px "Lucida Sans Unicode"';
     ctx.fillStyle = '#fff';
     ctx.fillText('Game',170,350);
     ctx.fillText('Over',200,420);
@@ -85,7 +85,13 @@ var gameOver = function(){
 var winningSound = new Sound('audio/success.wav');
 var youWin = function () {
     winningSound.play();
+    ctx.globalAlpha=0.6;
+    ctx.fillRect(0,0,505,606);
+    ctx.globalAlpha=1;
     ctx.drawImage(Resources.get('images/award.png'), 70,  47, 365, 512);
+    ctx.font = '80px "Trebuchet MS"';
+    ctx.fillStyle = '#fff';
+    ctx.fillText('You win!',100,500);
 };
 
 var game = function(){
