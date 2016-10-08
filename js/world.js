@@ -127,8 +127,7 @@ World.prototype.isGameOn = function(){
 * MANAGE PLAYER LEFT ACTION
 * */
 var _obstacleHeightOverlapsPlayer  = function(obstacle, player){
-    return obstacle.getPosition().y + obstacle.size.height < player.getPosition().y
-        || obstacle.getPosition().y > player.getPosition().y + player.size.height;
+    return obstacle.getPosition().y + obstacle.size.height < player.getPosition().y || obstacle.getPosition().y > player.getPosition().y + player.size.height;
 };
 
 World.prototype._getObstaclesOnTheLeft = function(){
@@ -208,9 +207,8 @@ World.prototype.rightAction = function(){
  * */
 
 
-_obstacleWidthOverlapsPlayer  = function(obstacle, player){
-    return obstacle.getPosition().x + obstacle.size.width < player.getPosition().x
-        || obstacle.getPosition().x > player.getPosition().x + player.size.width;
+var _obstacleWidthOverlapsPlayer  = function(obstacle, player){
+    return obstacle.getPosition().x + obstacle.size.width < player.getPosition().x || obstacle.getPosition().x > player.getPosition().x + player.size.width;
 };
 
 

@@ -14,16 +14,16 @@ function getAvatar() {
 function getAvatarDimensionsRatios(avatar) {
     var ratios = [1, 1];
     if (avatar == 'ladybug') {
-        ratios = [.9, 1];
+        ratios = [0.9, 1];
     }
     if (avatar == 'grasshopper') {
-        ratios = [1, .51];
+        ratios = [1, 0.51];
     }
     if (avatar == 'snail') {
-        ratios = [1, .75];
+        ratios = [1, 0.75];
     }
     if (avatar == 'spider') {
-        ratios = [1, .9];
+        ratios = [1, 0.9];
     }
     return ratios;
 }
@@ -141,10 +141,10 @@ var game = function () {
         'width': 80,
         'height': 80
     });
-    for (var i = 0; i < 5; i++) {
+    for (var p = 0; p < 5; p++) {
         decors.push({
             x: 135,
-            y: (180 + 32 * i),
+            y: (180 + 32 * p),
             'sprite': 'images/water-block.png',
             'qty': 1,
             'isObstacle': true,
