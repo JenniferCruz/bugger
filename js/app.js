@@ -1,5 +1,6 @@
 // TODO: [required] Add read.me
 // TODO: [required] Use code validators
+// TODO: [optional] Check tests run ok
 // TODO: [required] Make game a little harder
 // TODO: [optional] Add 2 or 3 additional levels
 // TODO: [optional] spritesheet to animate movement of shoes and bugs http://stackoverflow.com/questions/3062229/animated-gif-in-html5-canvas
@@ -91,27 +92,27 @@ var game = function () {
     // hero
     var avatar = 'images/player_' + getAvatar() + '.png';
     var ratios = getAvatarDimensionsRatios(getAvatar());
-    var player = Box.createBox({x: 30, y: 520}, {width: (50 * ratios[0]), height: (50 * ratios[1])}, avatar);
+    var player = Box({x: 30, y: 520}, {width: (50 * ratios[0]), height: (50 * ratios[1])}, avatar);
 
     // enemies
-    var human = Box.createBox({x: 21, y: 230}, {width: 50, height: 19}, 'images/rubber-sandals.png');
+    var human = Box({x: 21, y: 230}, {width: 50, height: 19}, 'images/rubber-sandals.png');
     human.setVelocity({vx: 0.4, vy: 0});
-    var human2 = Box.createBox({x: 21, y: 385}, {width: 50, height: 31}, 'images/tennis.png');
+    var human2 = Box({x: 21, y: 385}, {width: 50, height: 31}, 'images/tennis.png');
     human2.setVelocity({vx: 1, vy: 0});
-    var human3 = Box.createBox({x: 25, y: 45}, {width: 50, height: 44}, 'images/cinderella-shoe.png');
+    var human3 = Box({x: 25, y: 45}, {width: 50, height: 44}, 'images/cinderella-shoe.png');
     human3.setVelocity({vx: 0.4, vy: 0});
-    var human4 = Box.createBox({x: 200, y: 100}, {width: 50, height: 50}, 'images/boot.gif');
+    var human4 = Box({x: 200, y: 100}, {width: 50, height: 50}, 'images/boot.gif');
     human4.setVelocity({vx: 1, vy: 0});
-    var human5 = Box.createBox({x: 200, y: 250}, {width: 50, height: 30}, 'images/foot.png');
+    var human5 = Box({x: 200, y: 250}, {width: 50, height: 30}, 'images/foot.png');
     human5.setVelocity({vx: 1, vy: 0});
-    var human6 = Box.createBox({x: 400, y: 470}, {width: 50, height: 18}, 'images/loafer.png');
+    var human6 = Box({x: 400, y: 470}, {width: 50, height: 18}, 'images/loafer.png');
     human6.setVelocity({vx: 1, vy: 0});
 
     // borders
-    var horizontalTop = Box.createBox({x: 0, y: 0}, {width: 505, height: 40}, 'images/forest_2.png');
-    var horizontalBottom = Box.createBox({x: 5, y: 585}, {width: 495, height: 20}, 'images/fence_2.png');
-    var verticalLeft = Box.createBox({x: 0, y: 35}, {width: 20, height: 565}, 'images/fence_left.png');
-    var verticalRight = Box.createBox({x: 485, y: 35}, {width: 20, height: 565}, 'images/fence_left.png');
+    var horizontalTop = Box({x: 0, y: 0}, {width: 505, height: 40}, 'images/forest_2.png');
+    var horizontalBottom = Box({x: 5, y: 585}, {width: 495, height: 20}, 'images/fence_2.png');
+    var verticalLeft = Box({x: 0, y: 35}, {width: 20, height: 565}, 'images/fence_left.png');
+    var verticalRight = Box({x: 485, y: 35}, {width: 20, height: 565}, 'images/fence_left.png');
 
     // decor and obstacles
     var decors = [];
@@ -210,7 +211,7 @@ var game = function () {
     var scenery = new World({
         hero: player,
         evils: [human, human2, human3, human4, human5, human6],
-        goal: Box.createBox({x: 365, y: 20}, {width: 50, height: 50}, 'images/cave_2.png'),
+        goal: Box({x: 365, y: 20}, {width: 50, height: 50}, 'images/cave_2.png'),
         staticObjects: [horizontalTop, verticalLeft, horizontalBottom, verticalRight],
         decor: decors
     });

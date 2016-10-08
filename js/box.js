@@ -68,8 +68,3 @@ function Box(point, size, img) {
     return obj;
 }
 
-// TODO: keep constructor factory?
-Box.createBox = function(point, size, color) {
-     return new Box(point, size, color);
-};
-

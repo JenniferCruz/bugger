@@ -24,7 +24,7 @@ function World(obj) {
   for(var i = 0; i < obj.decor.length; i++){
       var decorSet = obj.decor[i];
       for(var j = 0; j < decorSet.qty; j++){
-          var box = Box.createBox({x: (decorSet.x + j*decorSet.width), y: decorSet.y}, {width: decorSet.width || 60, height: decorSet.height || 80}, decorSet.sprite);
+          var box = Box({x: (decorSet.x + j*decorSet.width), y: decorSet.y}, {width: decorSet.width || 60, height: decorSet.height || 80}, decorSet.sprite);
           if(decorSet.isObstacle === true)
               this._obstacles.push(box);
           else{
