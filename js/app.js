@@ -1,5 +1,5 @@
 // TODO: [required] Add read.me
-// TODO: [required] Comment js files and make them style guide compliant http://udacity.github.io/frontend-nanodegree-styleguide/javascript.html
+// TODO: [required] Use code validators
 // TODO: [required] Make game a little harder
 // TODO: [optional] Add 2 or 3 additional levels
 // TODO: [optional] spritesheet to animate movement of shoes and bugs http://stackoverflow.com/questions/3062229/animated-gif-in-html5-canvas
@@ -7,7 +7,7 @@
 
 function getAvatar() {
     var urlParams = window.location.search;
-    return urlParams.split("=")[1] || 'snail';
+    return urlParams.split('=')[1] || 'snail';
 }
 
 function getAvatarDimensionsRatios(avatar) {
@@ -63,7 +63,7 @@ Resources.load([
 
 
 var gameOver = function () {
-    gameOverSound.play();
+    GAME_OVER_SOUND.play();
     ctx.fillStyle = '#000';
     ctx.rect(0, 0, 505, 606);
     ctx.fill();
@@ -75,7 +75,7 @@ var gameOver = function () {
 };
 
 var youWin = function () {
-    winningSound.play();
+    WINNING_SOUND.play();
     ctx.globalAlpha = 0.6;
     ctx.fillRect(0, 0, 505, 606);
     ctx.globalAlpha = 1;
@@ -224,7 +224,7 @@ var game = function () {
         ctx.fillStyle = 'blue';
         ctx.fillRect(0, 0, 505, 606);
         scenery.getAllBoxes().forEach(function (box) {
-            ctx.drawImage(Resources.get(box.color), box.getPosition().x, box.getPosition().y, box.size.width, box.size.height);
+            ctx.drawImage(Resources.get(box.img), box.getPosition().x, box.getPosition().y, box.size.width, box.size.height);
         });
     };
 
@@ -269,5 +269,3 @@ var game = function () {
 };
 
 Resources.onReady(game);
-
-//game();

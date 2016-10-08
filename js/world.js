@@ -1,28 +1,18 @@
-
-/* http://www.w3schools.com/games/game_sound.asp */
-function Sound(src) {
-    this.sound = document.createElement("audio");
-    this.sound.src = src;
-    this.sound.setAttribute("preload", "auto");
-    this.sound.setAttribute("controls", "none");
-    this.sound.style.display = "none";
-    document.body.appendChild(this.sound);
-    this.play = function(){
-        this.sound.play();
-    };
-    this.stop = function(){
-        this.sound.pause();
-    };
-}
-
 var lives = 4;
-var hitSound1 = new Sound('audio/dirt.wav');
-var hitSound2 = new Sound('audio/minion_hit.wav');
-var hitSound3 = new Sound('audio/bug.wav');
-var hitSounds = [hitSound1, hitSound2, hitSound3];
-var winningSound = new Sound('audio/achievement.wav');
-var gameOverSound = new Sound('audio/fail.wav');
+var HIT_SOUND = [new Sound('audio/dirt.wav'), new Sound('audio/minion_hit.wav'), new Sound('audio/bug.wav')];
+var WINNING_SOUND = new Sound('audio/achievement.wav');
+var GAME_OVER_SOUND = new Sound('audio/fail.wav');
 
+/**
+ * @constructor
+ * @param {object} obj - contains various objects:
+ *          hero - box object
+ *          evils - array of box objects
+ *          goal - box object
+ *          staticObjects - array of box objects that represent obstacles
+ *          decor - arrays of objects with information to create decor objects and/or additional obstacles in bulk.
+ *          TODO: How can I get this better?
+ * */
 function World(obj) {
   this._hero = obj.hero;
   this._evils = obj.evils;
@@ -30,7 +20,7 @@ function World(obj) {
   this._goal = obj.goal;
   this._obstacles = obj.staticObjects || [];
   this._decor = [];
-
+  // iterate over decor parameter to create additional box objects
   for(var i = 0; i < obj.decor.length; i++){
       var decorSet = obj.decor[i];
       for(var j = 0; j < decorSet.qty; j++){
@@ -44,15 +34,18 @@ function World(obj) {
   }
 }
 
-
+/**
+ * @description move hero and enemies and check for potential collisions
+ * */
 World.prototype.tick = function() {
 	this._tickAllCharacters();
 	this._detectCollitions();
 };
 
-
+/**
+ * @description move hero and enemies one step
+ * */
 World.prototype._tickAllCharacters = function() {
-	//step for the hero and the evils
     this._hero.tick();
     this._evils.forEach(function(evil) {
         evil.tick();
@@ -60,7 +53,15 @@ World.prototype._tickAllCharacters = function() {
 };
 
 
-World.prototype.evilCollidesWithObstacles = function () {
+World.prototype._detectCollitions = function() {
+    this._heroCollidesWithEvils();
+    this._evilCollidesWithObstacles();
+};
+
+/**
+ * @description change enemies direction if they collide with an obstacle.
+ * */
+World.prototype._evilCollidesWithObstacles = function () {
     var obstacles = this._obstacles;
     this._evils.forEach(function(enemy){
         obstacles.forEach(function(obstacle){
@@ -73,21 +74,17 @@ World.prototype.evilCollidesWithObstacles = function () {
 
 };
 
-
-World.prototype._detectCollitions = function() {
-    this.heroCollidesWithEvils();
-    this.evilCollidesWithObstacles();
-    this.isPlayerOnGoal();
-};
-
-
-World.prototype.heroCollidesWithEvils = function() {
+/**
+ * @description manage behaviour when hero collides with an enemy:
+ * decrease live, play a sound and move hero back to initial position.
+ * */
+World.prototype._heroCollidesWithEvils = function() {
     var hero = this._hero;
     var initialHeroPosition = this._initialHeroPosition;
     this._evils.forEach(function (evil) {
         if (hero.collides(evil)) {
             hero.setPosition(initialHeroPosition);
-            hitSounds[(lives%3)].play();
+            HIT_SOUND[(lives%3)].play();
             lives--;
         }
     });
@@ -102,13 +99,7 @@ World.prototype.isPlayerOnGoal = function(){
 };
 
 
-World.prototype.isGoalReached = function(){
-  return this._hero.collides(this._goal);
-};
-
-
 World.prototype.getEvils = function(){
-  //return Object.assign([], this._evils);
   return this._evils;
 };
 
@@ -117,27 +108,25 @@ World.prototype.getHero = function(){
   return this._hero;
 };
 
-
 World.prototype.getGoal = function(){
-  //return Object.assign({}, this._goal);
   return this._goal;
 };
-
-//
-//var operation = {
-//    '+': function(a, b){ return a + b;},
-//    '-': function(a, b){ return a - b;}
-//};
 
 World.prototype.getAllBoxes = function () {
     var boxes = [];
     return boxes.concat(this._decor).concat(this._obstacles).concat(this._goal).concat(this._evils).concat(this._hero);
-}
+};
+
+
+World.prototype.isGameOn = function(){
+    return lives > 0 && !this.isPlayerOnGoal();
+};
+
 
 /*
-* PLAYER LEFT ACTION
+* MANAGE PLAYER LEFT ACTION
 * */
-_obstacleHeightOverlapsPlayer  = function(obstacle, player){
+var _obstacleHeightOverlapsPlayer  = function(obstacle, player){
     return obstacle.getPosition().y + obstacle.size.height < player.getPosition().y
         || obstacle.getPosition().y > player.getPosition().y + player.size.height;
 };
@@ -177,7 +166,7 @@ World.prototype.leftAction = function(){
 
 
 /*
-* PLAYER RIGHT ACTION
+* MANAGE PLAYER RIGHT ACTION
 * */
 
 World.prototype._getRightObstaclesXs = function(){
@@ -215,7 +204,7 @@ World.prototype.rightAction = function(){
 
 
 /*
- * PLAYER DOWN ACTION
+ * MANAGE PLAYER DOWN ACTION
  * */
 
 
@@ -223,10 +212,7 @@ _obstacleWidthOverlapsPlayer  = function(obstacle, player){
     return obstacle.getPosition().x + obstacle.size.width < player.getPosition().x
         || obstacle.getPosition().x > player.getPosition().x + player.size.width;
 };
-//_obstacleWidthOverlapsPlayer  = function(obstacle, player){
-//    return obstacle.getPosition().x + obstacle.size.width < player.getPosition().x
-//        || obstacle.getPosition().x > player.getPosition().x + player.size.width;
-//};
+
 
 World.prototype._getObstaclesBelowYs = function(){
     var obstaclesYs = [];
@@ -296,7 +282,3 @@ World.prototype.upAction = function(){
 };
 
 
-
-World.prototype.isGameOn = function(){
-    return lives > 0 && !this.isPlayerOnGoal();
-};
