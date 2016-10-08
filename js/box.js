@@ -2,7 +2,6 @@
  * This class was developed to allow functional inheritance.
  * However, I ended up not using inheritance.
  */
-
 /**
  * @description All entities within world are represented as a Box instance.
  * This includes hero character, enemies, obstacles and boundaries
@@ -13,8 +12,14 @@
 function Box(point, size, img) {
     var obj = {};
     obj._position = point;
-    obj.velocity = {vx: 0, vy: 0};
-    obj.size = size || {width: 50, height: 50};
+    obj.velocity = {
+        vx: 0,
+        vy: 0
+    };
+    obj.size = size || {
+            width: 50,
+            height: 50
+        };
     obj.img = img;
 
     /**
@@ -26,45 +31,47 @@ function Box(point, size, img) {
         this._position.y += incrementPosition.vy;
     };
 
-   obj.stop = function() {
-        this.setVelocity({vx:0, vy: 0});
+    obj.stop = function() {
+        this.setVelocity({
+            vx: 0,
+            vy: 0
+        });
     };
 
-   /**
-    * @param {object} velocity - with vx and vy numerical values
-    * */
-   obj.setVelocity = function(velocity) {
+    /**
+     * @param {object} velocity - with vx and vy numerical values
+     * */
+    obj.setVelocity = function(velocity) {
         this.velocity = velocity;
     };
 
-   /**
-    * @description Move box with its current velocity
-    * */
-   obj.tick = function() {
-       obj.move(this.velocity);
+    /**
+     * @description Move box with its current velocity
+     * */
+    obj.tick = function() {
+        obj.move(this.velocity);
     };
 
-   /**
-    * @param {Box} other - another box
-    * @returns {boolean} whether this box and other box collide
-    * */
-   obj.collides = function(other) {
+    /**
+     * @param {Box} other - another box
+     * @returns {boolean} whether this box and other box collide
+     * */
+    obj.collides = function(other) {
         return !(this._position.x + this.size.width < other._position.x || this._position.x > other._position.x + other.size.width) &&
             !(this._position.y + this.size.height < other._position.y || this._position.y > other._position.y + other.size.height);
-   };
+    };
 
-   obj.getPosition = function(){
+    obj.getPosition = function() {
         return Object.assign({}, this._position);
     };
 
-   obj.setPosition = function(point){
+    obj.setPosition = function(point) {
         this._position = Object.assign({}, point);
     };
 
-    obj.getVelocity = function(){
+    obj.getVelocity = function() {
         return Object.assign({}, this.velocity);
     };
 
     return obj;
 }
-

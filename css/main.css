@@ -133,6 +133,8 @@ aside {
 
 
 @media screen and (max-width: 700px) {
+
+
   body {
     width: 100%;
   }
@@ -146,10 +148,14 @@ aside {
   .content {
     border-radius: 0;
   }
+
+
 }
 
 
 @media screen and (max-width: 500px) {
+
+
   .player-choice {
     width: 200px;
   }
@@ -158,4 +164,6 @@ aside {
   .play-btn {
     padding: 10px 100px;
   }
+
+
 }
