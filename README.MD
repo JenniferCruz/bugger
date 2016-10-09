@@ -22,7 +22,7 @@ If you just want to play click [here](#) and start playing right away! Else...
 3. Try to **reach the goal** and don't let feet and shoes step on you!
 
 ## Making changes to the game 
-If you want to make any changes to the game design or difficulty (or maybe just add additional levels), here's a brief introduction to the javascript classes you'll find:
+If you want to make any changes to the game design or difficulty (or maybe just add additional levels), here's a brief introduction to the most important javascript classes you'll find:
 
 ### The Box class
 This class was designed with the intention to keep everything that can be thought of as a point or entity in space in a logical unit (think Cartesian plane). __All entities in a world are represented as boxes__. This includes the hero character, the enemies, obstacles and boundaries. 
