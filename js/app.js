@@ -1,7 +1,6 @@
-// TODO: [required] Add read.me
-// TODO: [required] Use code validators
 // TODO: [optional] Check tests run ok
 // TODO: [required] Make game a little harder
+
 // TODO: [optional] Add 2 or 3 additional levels
 // TODO: [optional] spritesheet to animate movement of shoes and bugs http://stackoverflow.com/questions/3062229/animated-gif-in-html5-canvas
 // TODO: [optional?] bug with tenni shoe going through obstacles
