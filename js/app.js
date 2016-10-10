@@ -4,11 +4,17 @@
 // TODO: [optional] spritesheet to animate movement of shoes and bugs http://stackoverflow.com/questions/3062229/animated-gif-in-html5-canvas
 // TODO: [optional] bug with tenni shoe going through obstacles
 
+/**
+ * @description parses url to get character choosen by player
+ * */
 function getAvatar() {
     var urlParams = window.location.search;
     return urlParams.split('=')[1] || 'snail';
 }
 
+/**
+ * @description store images width to height ratios to use when drawing
+ * */
 function getAvatarDimensionsRatios(avatar) {
     var ratios = [1, 1];
     if (avatar == 'ladybug') {
@@ -55,11 +61,11 @@ Resources.load([
     'images/bonfire.png',
     'images/tulips.png',
     'images/water-block.png',
+    'images/bush_fence_left.png',
     'images/heart.png',
     'images/dead.png',
     'images/award.png'
 ]);
-
 
 var gameOver = function() {
     GAME_OVER_SOUND.play();
@@ -84,9 +90,9 @@ var youWin = function() {
     ctx.fillText('You win!', 100, 500);
 };
 
-var game = function() {
-
+var level1 = function() {
     // Variables to set up scenery
+
     // hero
     var avatar = 'images/player_' + getAvatar() + '.png';
     var ratios = getAvatarDimensionsRatios(getAvatar());
@@ -343,13 +349,411 @@ var game = function() {
         decor: decors
     });
 
+    return scenery;
+};
 
-    // scenery is a singleton, so an object is created
+
+var level2 = function() {
+    // hero
+    var avatar = 'images/player_' + getAvatar() + '.png';
+    var ratios = getAvatarDimensionsRatios(getAvatar());
+    var player = Box({
+        x: 400,
+        y: 52
+    }, {
+        width: (45 * ratios[0]),
+        height: (45 * ratios[1])
+    }, avatar);
+
+    // enemies
+    var enemy = Box({
+        x: 21,
+        y: 230
+    }, {
+        width: 50,
+        height: 19
+    }, 'images/rubber-sandals.png');
+    enemy.setVelocity({
+        vx: 0.4,
+        vy: 0
+    });
+
+    // borders
+    var horizontalTop = Box({
+        x: 0,
+        y: 0
+    }, {
+        width: 505,
+        height: 40
+    }, 'images/forest_2.png');
+    var horizontalBottom = Box({
+        x: 18,
+        y: 585
+    }, {
+        width: 470,
+        height: 20
+    }, 'images/fence_2.png');
+    var verticalLeft = Box({
+        x: 0,
+        y: 35
+    }, {
+        width: 20,
+        height: 600
+    }, 'images/bush_fence_left.png');
+
+    // decor and additional obstacles
+    var decors = [];
+
+    // FIRST, THE "WALKABLE PATH"
+
+    // 4 stone blocks at top right (entry point)
+    for(var i = 0; i < 2; i++) {
+        decors.push({
+            x: 380,
+            y: 40+(i*28),
+            'sprite': 'images/stone-block.png',
+            'qty': 2,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // cave - (entry point)
+    decors.push({
+        x: 400,
+        y: 25,
+        'sprite': 'images/cave_2.png',
+        'qty': 1,
+        'width': 50,
+        'height': 50
+    });
+
+    // second stone blocks offshoot around center
+    for(var i = 0; i < 2; i++) {
+        decors.push({
+            x: 260,
+            y: 250 + (i * 28),
+            'sprite': 'images/stone-block.png',
+            'qty': 2,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // third 4 stone blocks offshoot around center
+    for(var i = 0; i < 2; i++){
+        decors.push({
+            x: 260,
+            y: 400 + (i*28),
+            'sprite': 'images/stone-block.png',
+            'qty': 2,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // FIRST horizontal stone path
+    for(var i = 0; i < 2; i++) {
+        decors.push({
+            x: 20,
+            y: (28*i) + 100,
+            'sprite': 'images/stone-block.png',
+            'qty': 11,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // first 4 stone blocks offshoot around center
+    for(var i = 0; i < 2; i++) {
+        decors.push({
+            x: 260,
+            y: 150+(i*28),
+            'sprite': 'images/stone-block.png',
+            'qty': 2,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // SECOND horizontal stone path
+    for(var i = 0; i < 2; i++) {
+        decors.push({
+            x: 100,
+            y: (i * 28)+300,
+            'sprite': 'images/stone-block.png',
+            'qty': 9,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // FIRST vertical stone path on the left
+    for(var i = 0; i < 13; i++) {
+        decors.push({
+            x: 100,
+            y: (i*28)+40,
+            'sprite': 'images/stone-block.png',
+            'qty': 2,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // SECOND vertical stone path on the right
+    for(var i = 0; i < 6; i++) {
+        decors.push({
+            x: 380,
+            y: (i*28)+300,
+            'sprite': 'images/stone-block.png',
+            'qty': 2,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // THIRD horizontal stone path
+    for(var i = 0; i < 2; i++) {
+        decors.push({
+            x: 20,
+            y: (i*28) + 450,
+            'sprite': 'images/stone-block.png',
+            'qty': 11,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // THIRD vertical stone path leading to goal
+    for(var i = 0; i < 5; i++) {
+        decors.push({
+            x: 60,
+            y: (i*28)+450,
+            'sprite': 'images/stone-block.png',
+            'qty': 2,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // second 4-stone blocks offshoot on the left
+    for(var i = 0; i < 2; i++){
+        decors.push({
+            x: 20,
+            y: (28 * i) + 210,
+            'sprite': 'images/stone-block.png',
+            'qty': 2,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+
+    // NOW, OBSTACLES AROUND THE "WALKABLE PATH"
+
+    // 4 grass blocks top left
+    for(var i = 0; i < 2; i++) {
+        decors.push({
+            x: 20,
+            y: 37 + (i*28),
+            'sprite': 'images/grass-block.png',
+            'qty': 2,
+            'isObstacle': true,
+            'width': 40,
+            'height': 35
+        });
+    }
+
+     //2 grass blocks column on left
+    for(var i = 0; i < 6; i++) {
+        decors.push({
+            x: 20,
+            y: 270 + (i * 28),
+            'sprite': 'images/grass-block.png',
+            'qty': 2,
+            'isObstacle': true,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // left bottom grass
+    for(var i = 0; i < 3; i++) {
+        decors.push({
+            x: 20,
+            y: 510 + (i * 28),
+            'sprite': 'images/grass-block.png',
+            'qty': 1,
+            'isObstacle': true,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // grass blocks top center
+    for(var i = 0; i < 2; i++) {
+        decors.push({
+            x: 180,
+            y: 37 + (i*28),
+            'sprite': 'images/grass-block.png',
+            'qty': 5,
+            'isObstacle': true,
+            'width': 40,
+            'height': 35
+        });
+    }
+
+    // 2 grass blocks left around center
+    for(var i = 0; i < 2; i++) {
+        decors.push({
+            x: 20,
+            y: 160 + (i * 10),
+            'sprite': 'images/grass-block.png',
+            'qty': 2,
+            'isObstacle': true,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // grass blocks in right from top to bottom
+    for(var i = 0; i < 17; i++) {
+        decors.push({
+            x: 460,
+            y: 38 + (i*28),
+            'sprite': 'images/grass-block.png',
+            'qty': 2,
+            'isObstacle': true,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // horizontal bottom grass segment
+    for(var i = 0; i < 3; i++) {
+        decors.push({
+            x: 140,
+            y: 510 + (i * 28),
+            'sprite': 'images/grass-block.png',
+            'qty': 10,
+            'isObstacle': true,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // 2 columns of grass blocks around center left
+    for(var i = 0; i < 4; i++) {
+        decors.push({
+            x: 180,
+            y: 160 + (i * 34),
+            'sprite': 'images/grass-block.png',
+            'qty': 2,
+            'isObstacle': true,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // 3 columns of grass blocks around center right
+    for(var i = 0; i < 4; i++) {
+        decors.push({
+            x: 340,
+            y: 160 + (i * 35),
+            'sprite': 'images/grass-block.png',
+            'qty': 3,
+            'isObstacle': true,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // 2 columns of grass blocks on center
+    decors.push({
+        x: 260,
+        y: 210,
+        'sprite': 'images/grass-block.png',
+        'qty': 2,
+        'isObstacle': true,
+        'width': 40,
+        'height': 40
+    });
+
+    // grass blocks around center left -
+    for(var i = 0; i < 3; i++) {
+        decors.push({
+            x: 180,
+            y: 360 + (i * 25),
+            'sprite': 'images/grass-block.png',
+            'qty': 2,
+            'isObstacle': true,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // 2 grass blocks around center left
+    decors.push({
+        x: 100,
+        y: 410,
+        'sprite': 'images/grass-block.png',
+        'qty': 2,
+        'isObstacle': true,
+        'width': 40,
+        'height': 40
+    });
+
+    // grass blocks around center right
+    for(var i = 0; i < 3; i++) {
+        decors.push({
+            x: 340,
+            y: 360 + (i * 25),
+            'sprite': 'images/grass-block.png',
+            'qty': 1,
+            'isObstacle': true,
+            'width': 40,
+            'height': 40
+        });
+    }
+
+    // 2 grass blocks around center
+    decors.push({
+        x: 260,
+        y: 360,
+        'sprite': 'images/grass-block.png',
+        'qty': 2,
+        'isObstacle': true,
+        'width': 40,
+        'height': 40
+    });
+
+    // world
+    var scenery = new World({
+        hero: player,
+        evils: [enemy],
+        goal: Box({
+            x: 70,
+            y: 560
+        }, {
+            width: 50,
+            height: 50
+        }, 'images/cave_2.png'),
+        staticObjects: [horizontalTop, verticalLeft, horizontalBottom],
+        decor: decors
+    });
+
+    return scenery;
+};
+
+var game = function(level) {
+
+    var scenery = level;
+
+    // sceneryCanvas is a singleton, so an object is created
     var sceneryCanvas = {};
 
-
     sceneryCanvas.draw = function() {
-        ctx.fillStyle = 'blue';
+        //ctx.fillStyle = 'blue';
         ctx.fillRect(0, 0, 505, 606);
         scenery.getAllBoxes().forEach(function(box) {
             ctx.drawImage(Resources.get(box.img), box.getPosition().x, box.getPosition().y, box.size.width, box.size.height);
@@ -370,6 +774,9 @@ var game = function() {
             });
         } else if (scenery.isPlayerOnGoal()) {
             youWin();
+            setTimeout(function() {
+                game(level2());
+            }, 1000);
         } else {
             gameOver();
         }
@@ -396,4 +803,6 @@ var game = function() {
     });
 };
 
-Resources.onReady(game);
+Resources.onReady(function () {
+    game(level2());
+});
