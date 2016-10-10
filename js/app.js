@@ -3,7 +3,7 @@
 
 // TODO: [optional] spritesheet to animate movement of shoes and bugs http://stackoverflow.com/questions/3062229/animated-gif-in-html5-canvas
 // TODO: [optional] bug with tenni shoe going through obstacles
-
+var currentLevel = 1;
 /**
  * @description parses url to get character choosen by player
  * */
@@ -62,6 +62,7 @@ Resources.load([
     'images/tulips.png',
     'images/water-block.png',
     'images/tree.png',
+    'images/fireworks.png',
     'images/picnic-basket.png',
     'images/hot-air-balloon.png',
     'images/hammock.png',
@@ -102,6 +103,23 @@ var youWin = function() {
     ctx.font = '80px "Trebuchet MS"';
     ctx.fillStyle = '#fff';
     ctx.fillText('You win!', 100, 500);
+};
+
+var introduceLevel2 = function () {
+    WINNING_SOUND.play();
+    ctx.globalAlpha = 0.6;
+    ctx.fillRect(0, 0, 505, 606);
+    ctx.globalAlpha = 1;
+    ctx.drawImage(Resources.get('images/fireworks.png'), 0, 47, 512, 512);
+    ctx.font = '70px "Trebuchet MS"';
+    ctx.fillStyle = '#FFBF00';
+    ctx.fillText('Great!', 160, 380);
+    ctx.font = '40px "Trebuchet MS"';
+    ctx.fillStyle = '#FF8000';
+    ctx.fillText('Move on to', 160, 420);
+    ctx.font = '80px "Arial Black"';
+    ctx.fillStyle = '#FE642E';
+    ctx.fillText('level 2', 120, 500);
 };
 
 var level1 = function() {
@@ -894,7 +912,7 @@ var game = function(level) {
     var sceneryCanvas = {};
 
     sceneryCanvas.draw = function() {
-        //ctx.fillStyle = 'blue';
+        ctx.fillStyle = "#000";
         ctx.fillRect(0, 0, 505, 606);
         scenery.getAllBoxes().forEach(function(box) {
             ctx.drawImage(Resources.get(box.img), box.getPosition().x, box.getPosition().y, box.size.width, box.size.height);
@@ -913,11 +931,14 @@ var game = function(level) {
             window.requestAnimationFrame(function() {
                 sceneryCanvas.keepDrawing();
             });
-        } else if (scenery.isPlayerOnGoal()) {
-            youWin();
+        } else if (scenery.isPlayerOnGoal() && currentLevel == 1) {
+            introduceLevel2();
+            currentLevel++;
             setTimeout(function() {
                 game(level2());
             }, 1000);
+        } else if (scenery.isPlayerOnGoal()) {
+            youWin();
         } else {
             gameOver();
         }
@@ -944,6 +965,7 @@ var game = function(level) {
     });
 };
 
+
 Resources.onReady(function () {
-    game(level2());
+    game(level1());
 });
