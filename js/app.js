@@ -61,6 +61,20 @@ Resources.load([
     'images/bonfire.png',
     'images/tulips.png',
     'images/water-block.png',
+    'images/tree.png',
+    'images/picnic-basket.png',
+    'images/hot-air-balloon.png',
+    'images/hammock.png',
+    'images/mushroom.png',
+    'images/rain-boots.png',
+    'images/platform-shoe.png',
+    'images/sandals.png',
+    'images/shoe_2.png',
+    'images/flip-flop.png',
+    'images/tulip_1.png',
+    'images/tulip_2.png',
+    'images/rainbow.png',
+    'images/log.png',
     'images/bush_fence_left.png',
     'images/heart.png',
     'images/dead.png',
@@ -365,19 +379,6 @@ var level2 = function() {
         height: (45 * ratios[1])
     }, avatar);
 
-    // enemies
-    var enemy = Box({
-        x: 21,
-        y: 230
-    }, {
-        width: 50,
-        height: 19
-    }, 'images/rubber-sandals.png');
-    enemy.setVelocity({
-        vx: 0.4,
-        vy: 0
-    });
-
     // borders
     var horizontalTop = Box({
         x: 0,
@@ -400,6 +401,13 @@ var level2 = function() {
         width: 20,
         height: 600
     }, 'images/bush_fence_left.png');
+    var verticalRight = Box({
+        x: 485,
+        y: 35
+    }, {
+        width: 20,
+        height: 565
+    }, 'images/fence_left.png');
 
     // decor and additional obstacles
     var decors = [];
@@ -727,18 +735,151 @@ var level2 = function() {
         'height': 40
     });
 
+    // ADDITIONAL DECORATIVE ELEMENTS
+    decors.push({
+        x: 200,
+        y: 50,
+        'sprite': 'images/mushroom.png',
+        'qty': 3,
+        'isObstacle': true,
+        'width': 50,
+        'height': 50
+    });
+
+    decors.push({
+        x: 30,
+        y: 55,
+        'sprite': 'images/log.png',
+        'qty': 1,
+        'isObstacle': true,
+        'width': 60,
+        'height': 34
+    });
+
+    decors.push({
+        x: 190,
+        y: 200,
+        'sprite': 'images/hot-air-balloon.png',
+        'qty': 1,
+        'isObstacle': true,
+        'width': 60,
+        'height': 87
+    });
+
+
+    decors.push({
+        x: 30,
+        y: 310,
+        'sprite': 'images/tree.png',
+        'qty': 1,
+        'isObstacle': true,
+        'width': 60,
+        'height': 80
+    });
+
+    decors.push({
+        x: 195,
+        y: 380,
+        'sprite': 'images/picnic-basket.png',
+        'qty': 1,
+        'isObstacle': true,
+        'width': 50,
+        'height': 50
+    });
+
+    decors.push({
+        x: 355,
+        y: 190,
+        'sprite': 'images/hammock.png',
+        'qty': 1,
+        'isObstacle': true,
+        'width': 100,
+        'height': 100
+    });
+
+    for(var i = 0; i < 9; i++) {
+        var flower = 'tulip_' + (i%2 + 1);
+        decors.push({
+            x: 160 + (i*30),
+            y: 530,
+            'sprite': 'images/' + flower + '.png',
+            'qty': 1,
+            'isObstacle': true,
+            'width': 50,
+            'height': 50
+        });
+    }
+
+
+    // enemies
+    var enemy = Box({
+        x: 22,
+        y: 105
+    }, {
+        width: 50,
+        height: 44
+    }, 'images/rain-boots.png');
+    enemy.setVelocity({
+        vx: 2,
+        vy: 0
+    });
+    var enemy2 = Box({
+        x: 50,
+        y: 215
+    }, {
+        width: 50,
+        height: 44
+    }, 'images/platform-shoe.png');
+    enemy2.setVelocity({
+        vx: 1,
+        vy: 0
+    });
+    var enemy3 = Box({
+        x: 120,
+        y: 330
+    }, {
+        width: 50,
+        height: 13
+    }, 'images/flip-flop.png');
+    enemy3.setVelocity({
+        vx: 1,
+        vy: 0
+    });
+    var enemy4 = Box({
+        x: 30,
+        y: 480
+    }, {
+        width: 50,
+        height: 17
+    }, 'images/shoe_2.png');
+    enemy4.setVelocity({
+        vx: 1,
+        vy: 0
+    });
+    var enemy5 = Box({
+        x: 400,
+        y: 460
+    }, {
+        width: 50,
+        height: 31
+    }, 'images/sandals.png');
+    enemy5.setVelocity({
+        vx: 1,
+        vy: 0
+    });
+
     // world
     var scenery = new World({
         hero: player,
-        evils: [enemy],
+        evils: [enemy, enemy2, enemy3, enemy4, enemy5],
         goal: Box({
-            x: 70,
-            y: 560
+            x: 50,
+            y: 550
         }, {
-            width: 50,
+            width: 100,
             height: 50
-        }, 'images/cave_2.png'),
-        staticObjects: [horizontalTop, verticalLeft, horizontalBottom],
+        }, 'images/rainbow.png'),
+        staticObjects: [horizontalTop, verticalLeft, horizontalBottom, verticalRight],
         decor: decors
     });
 
