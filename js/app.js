@@ -1,11 +1,15 @@
-// TODO: [required] Make game a little harder
-// TODO: [optional] Add 2 or 3 additional levels
+// TODO: sprite sheet to animate movement of shoes and bugs http://stackoverflow.com/questions/3062229/animated-gif-in-html5-canvas
+// TODO: bug with enemies going through some of the obstacles
 
-// TODO: [optional] spritesheet to animate movement of shoes and bugs http://stackoverflow.com/questions/3062229/animated-gif-in-html5-canvas
-// TODO: [optional] bug with tenni shoe going through obstacles
+// This class is full with set up code
+
 var currentLevel = 1;
+var canvas = document.querySelector('canvas'),
+    ctx = canvas.getContext('2d');
+
+
 /**
- * @description parses url to get character choosen by player
+ * @description parses url to get character chosen by player
  * */
 function getAvatar() {
     var urlParams = window.location.search;
@@ -31,9 +35,6 @@ function getAvatarDimensionsRatios(avatar) {
     }
     return ratios;
 }
-
-var canvas = document.querySelector('canvas'),
-    ctx = canvas.getContext('2d');
 
 Resources.load([
     'images/player_snail.png',
@@ -82,7 +83,10 @@ Resources.load([
     'images/award.png'
 ]);
 
-var gameOver = function() {
+/**
+ * @description Design to be drawn when game is over
+ * */
+var drawGameOver = function() {
     GAME_OVER_SOUND.play();
     ctx.fillStyle = '#000';
     ctx.rect(0, 0, 505, 606);
@@ -94,7 +98,10 @@ var gameOver = function() {
     ctx.fillText('Over', 250, 470);
 };
 
-var youWin = function() {
+/**
+ * @description Design to be drawn when player wins
+ * */
+var drawWin = function() {
     WINNING_SOUND.play();
     ctx.globalAlpha = 0.6;
     ctx.fillRect(0, 0, 505, 606);
@@ -105,7 +112,10 @@ var youWin = function() {
     ctx.fillText('You win!', 100, 500);
 };
 
-var introduceLevel2 = function () {
+/**
+ * @description Design to be drawn when player finishes level 1
+ * */
+var introduceLevel2 = function() {
     WINNING_SOUND.play();
     ctx.globalAlpha = 0.6;
     ctx.fillRect(0, 0, 505, 606);
@@ -122,6 +132,9 @@ var introduceLevel2 = function () {
     ctx.fillText('level 2', 120, 500);
 };
 
+/**
+ * @description Set up world layout and characters for level 1
+ * */
 var level1 = function() {
     // Variables to set up scenery
 
@@ -137,69 +150,69 @@ var level1 = function() {
     }, avatar);
 
     // enemies
-    var human = Box({
+    var enemy1 = Box({
         x: 21,
         y: 230
     }, {
         width: 50,
         height: 19
     }, 'images/rubber-sandals.png');
-    human.setVelocity({
+    enemy1.setVelocity({
         vx: 0.4,
         vy: 0
     });
-    var human2 = Box({
+    var enemy2 = Box({
         x: 21,
         y: 385
     }, {
         width: 50,
         height: 31
     }, 'images/tennis.png');
-    human2.setVelocity({
+    enemy2.setVelocity({
         vx: 1,
         vy: 0
     });
-    var human3 = Box({
+    var enemy3 = Box({
         x: 25,
         y: 45
     }, {
         width: 50,
         height: 44
     }, 'images/cinderella-shoe.png');
-    human3.setVelocity({
+    enemy3.setVelocity({
         vx: 0.4,
         vy: 0
     });
-    var human4 = Box({
+    var enemy4 = Box({
         x: 200,
         y: 100
     }, {
         width: 50,
         height: 50
     }, 'images/boot.gif');
-    human4.setVelocity({
+    enemy4.setVelocity({
         vx: 1,
         vy: 0
     });
-    var human5 = Box({
+    var enemy5 = Box({
         x: 200,
         y: 250
     }, {
         width: 50,
         height: 30
     }, 'images/foot.png');
-    human5.setVelocity({
+    enemy5.setVelocity({
         vx: 1,
         vy: 0
     });
-    var human6 = Box({
+    var enemy6 = Box({
         x: 400,
         y: 470
     }, {
         width: 50,
         height: 18
     }, 'images/loafer.png');
-    human6.setVelocity({
+    enemy6.setVelocity({
         vx: 1,
         vy: 0
     });
@@ -369,7 +382,7 @@ var level1 = function() {
     // world
     var scenery = new World({
         hero: player,
-        evils: [human, human2, human3, human4, human5, human6],
+        evils: [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6],
         goal: Box({
             x: 365,
             y: 20
@@ -384,7 +397,9 @@ var level1 = function() {
     return scenery;
 };
 
-
+/**
+ * @description Set up world layout and characters for level 2
+ * */
 var level2 = function() {
     // hero
     var avatar = 'images/player_' + getAvatar() + '.png';
@@ -433,10 +448,10 @@ var level2 = function() {
     // FIRST, THE "WALKABLE PATH"
 
     // 4 stone blocks at top right (entry point)
-    for(var i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 380,
-            y: 40+(i*28),
+            y: 40 + (i * 28),
             'sprite': 'images/stone-block.png',
             'qty': 2,
             'width': 40,
@@ -455,7 +470,7 @@ var level2 = function() {
     });
 
     // second stone blocks offshoot around center
-    for(var i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 260,
             y: 250 + (i * 28),
@@ -467,10 +482,10 @@ var level2 = function() {
     }
 
     // third 4 stone blocks offshoot around center
-    for(var i = 0; i < 2; i++){
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 260,
-            y: 400 + (i*28),
+            y: 400 + (i * 28),
             'sprite': 'images/stone-block.png',
             'qty': 2,
             'width': 40,
@@ -479,10 +494,10 @@ var level2 = function() {
     }
 
     // FIRST horizontal stone path
-    for(var i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 20,
-            y: (28*i) + 100,
+            y: (28 * i) + 100,
             'sprite': 'images/stone-block.png',
             'qty': 11,
             'width': 40,
@@ -491,10 +506,10 @@ var level2 = function() {
     }
 
     // first 4 stone blocks offshoot around center
-    for(var i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 260,
-            y: 150+(i*28),
+            y: 150 + (i * 28),
             'sprite': 'images/stone-block.png',
             'qty': 2,
             'width': 40,
@@ -503,10 +518,10 @@ var level2 = function() {
     }
 
     // SECOND horizontal stone path
-    for(var i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 100,
-            y: (i * 28)+300,
+            y: (i * 28) + 300,
             'sprite': 'images/stone-block.png',
             'qty': 9,
             'width': 40,
@@ -515,10 +530,10 @@ var level2 = function() {
     }
 
     // FIRST vertical stone path on the left
-    for(var i = 0; i < 13; i++) {
+    for (var i = 0; i < 13; i++) {
         decors.push({
             x: 100,
-            y: (i*28)+40,
+            y: (i * 28) + 40,
             'sprite': 'images/stone-block.png',
             'qty': 2,
             'width': 40,
@@ -527,10 +542,10 @@ var level2 = function() {
     }
 
     // SECOND vertical stone path on the right
-    for(var i = 0; i < 6; i++) {
+    for (var i = 0; i < 6; i++) {
         decors.push({
             x: 380,
-            y: (i*28)+300,
+            y: (i * 28) + 300,
             'sprite': 'images/stone-block.png',
             'qty': 2,
             'width': 40,
@@ -539,10 +554,10 @@ var level2 = function() {
     }
 
     // THIRD horizontal stone path
-    for(var i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 20,
-            y: (i*28) + 450,
+            y: (i * 28) + 450,
             'sprite': 'images/stone-block.png',
             'qty': 11,
             'width': 40,
@@ -551,10 +566,10 @@ var level2 = function() {
     }
 
     // THIRD vertical stone path leading to goal
-    for(var i = 0; i < 5; i++) {
+    for (var i = 0; i < 5; i++) {
         decors.push({
             x: 60,
-            y: (i*28)+450,
+            y: (i * 28) + 450,
             'sprite': 'images/stone-block.png',
             'qty': 2,
             'width': 40,
@@ -563,7 +578,7 @@ var level2 = function() {
     }
 
     // second 4-stone blocks offshoot on the left
-    for(var i = 0; i < 2; i++){
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 20,
             y: (28 * i) + 210,
@@ -578,10 +593,10 @@ var level2 = function() {
     // NOW, OBSTACLES AROUND THE "WALKABLE PATH"
 
     // 4 grass blocks top left
-    for(var i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 20,
-            y: 37 + (i*28),
+            y: 37 + (i * 28),
             'sprite': 'images/grass-block.png',
             'qty': 2,
             'isObstacle': true,
@@ -590,8 +605,8 @@ var level2 = function() {
         });
     }
 
-     //2 grass blocks column on left
-    for(var i = 0; i < 6; i++) {
+    //2 grass blocks column on left
+    for (var i = 0; i < 6; i++) {
         decors.push({
             x: 20,
             y: 270 + (i * 28),
@@ -604,7 +619,7 @@ var level2 = function() {
     }
 
     // left bottom grass
-    for(var i = 0; i < 3; i++) {
+    for (var i = 0; i < 3; i++) {
         decors.push({
             x: 20,
             y: 510 + (i * 28),
@@ -617,10 +632,10 @@ var level2 = function() {
     }
 
     // grass blocks top center
-    for(var i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 180,
-            y: 37 + (i*28),
+            y: 37 + (i * 28),
             'sprite': 'images/grass-block.png',
             'qty': 5,
             'isObstacle': true,
@@ -630,7 +645,7 @@ var level2 = function() {
     }
 
     // 2 grass blocks left around center
-    for(var i = 0; i < 2; i++) {
+    for (var i = 0; i < 2; i++) {
         decors.push({
             x: 20,
             y: 160 + (i * 10),
@@ -643,10 +658,10 @@ var level2 = function() {
     }
 
     // grass blocks in right from top to bottom
-    for(var i = 0; i < 17; i++) {
+    for (var i = 0; i < 17; i++) {
         decors.push({
             x: 460,
-            y: 38 + (i*28),
+            y: 38 + (i * 28),
             'sprite': 'images/grass-block.png',
             'qty': 2,
             'isObstacle': true,
@@ -656,7 +671,7 @@ var level2 = function() {
     }
 
     // horizontal bottom grass segment
-    for(var i = 0; i < 3; i++) {
+    for (var i = 0; i < 3; i++) {
         decors.push({
             x: 140,
             y: 510 + (i * 28),
@@ -669,7 +684,7 @@ var level2 = function() {
     }
 
     // 2 columns of grass blocks around center left
-    for(var i = 0; i < 4; i++) {
+    for (var i = 0; i < 4; i++) {
         decors.push({
             x: 180,
             y: 160 + (i * 34),
@@ -682,7 +697,7 @@ var level2 = function() {
     }
 
     // 3 columns of grass blocks around center right
-    for(var i = 0; i < 4; i++) {
+    for (var i = 0; i < 4; i++) {
         decors.push({
             x: 340,
             y: 160 + (i * 35),
@@ -706,7 +721,7 @@ var level2 = function() {
     });
 
     // grass blocks around center left -
-    for(var i = 0; i < 3; i++) {
+    for (var i = 0; i < 3; i++) {
         decors.push({
             x: 180,
             y: 360 + (i * 25),
@@ -730,7 +745,7 @@ var level2 = function() {
     });
 
     // grass blocks around center right
-    for(var i = 0; i < 3; i++) {
+    for (var i = 0; i < 3; i++) {
         decors.push({
             x: 340,
             y: 360 + (i * 25),
@@ -815,10 +830,10 @@ var level2 = function() {
         'height': 100
     });
 
-    for(var i = 0; i < 9; i++) {
-        var flower = 'tulip_' + (i%2 + 1);
+    for (var i = 0; i < 9; i++) {
+        var flower = 'tulip_' + (i % 2 + 1);
         decors.push({
-            x: 160 + (i*30),
+            x: 160 + (i * 30),
             y: 530,
             'sprite': 'images/' + flower + '.png',
             'qty': 1,
@@ -938,9 +953,9 @@ var game = function(level) {
                 game(level2());
             }, 1000);
         } else if (scenery.isPlayerOnGoal()) {
-            youWin();
+            drawWin();
         } else {
-            gameOver();
+            drawGameOver();
         }
     };
 
@@ -966,6 +981,6 @@ var game = function(level) {
 };
 
 
-Resources.onReady(function () {
+Resources.onReady(function() {
     game(level1());
 });
