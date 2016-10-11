@@ -1,7 +1,19 @@
-/**
- * This class was developed to allow functional inheritance.
- * However, I ended up not using inheritance.
+/*
+ * This class was designed with the intention to keep everything that
+ * can be thought of as a point or entity in space in a logical unit (think Cartesian plane).
+ * All entities in a world are represented as boxes.
+ * This includes the hero character, the enemies, obstacles and boundaries.
+ * Most functions within this class try to reflect how those boxes can interact in a 2D space.
+ * Boxes have an object position (x, y), an object size (width, height) and an img url.
+ * Boxes mostly move (change position), stop (set velocity to zero)
+ * and check whether they collided with another box.
+ *
+ * As a side note, this class was developed thinking I would need to use 'inheritance'.
+ * I ended up not needing it, but it should be easy to extend the Box class
+ * with the 'functional inheritance' concept.
  */
+
+
 /**
  * @description All entities within world are represented as a Box instance.
  * This includes hero character, enemies, obstacles and boundaries

@@ -1,7 +1,50 @@
 // TODO: sprite sheet to animate movement of shoes and bugs http://stackoverflow.com/questions/3062229/animated-gif-in-html5-canvas
 // TODO: bug with enemies going through some of the obstacles
+// TODO: bug with bee not being able to move through in second level
 
-// This class is full with set up code
+/*
+* This would be the persistence.
+* Everything comes together here, so you'll find A LOT of set up code.
+* This file is the meeting point between the canvas and the game logic.
+* Here, variables are set up: images are loaded and the layout of the world is created
+* (along with the elements that will need to be passed as parameters to create a new world).
+*
+* Here, you'll find several functions:
+*
+* getAvatar() and getAvatarDimensionsRatios()
+*     Those functions are used to parse player selection from url
+*     and adjust the width to height ratio of the image, when drawing it in the canvas.
+*
+* drawGameOver(), drawWin() and introduceLevel2()
+*       Those functions just draw the screen according to game result or status. Pretty much what the names suggest.
+*
+* level1()
+*       In here, everything related to level 1 is set up,
+*       so you'll find a lot of boxes being created for the hero or player,
+*       the enemies, the main borders of the canvas and additional decorative elements and obstacles.
+*       Finally, all those parameters are passed to ne World() constructor
+*       and the scenery containing all of the information is returned.
+*
+* level2()
+*       Pretty much same as level 1, but in level 2.
+*       Set up code is even more here, since the layout is intended to be a little more complex.
+*
+* game()
+*      This function receives a world or scenery (given by level1() or level())
+*      and defines a few functions to interact with the user and canvas. Namely:
+*      * draw()
+*           Draws the current state of the game
+*      * tick()
+*           Makes a call to the tick() function in world
+*           (where weverything that moves is updated) and updates lives count.
+*      * keepDrawing()
+*           If game is on (that is, the player hasn't yet reached the goal and there are still lives),
+*           it'll make a call to draw() and tick(). Otherwise, it'll either drawGameOver(), drawWin() or
+*           introduceLevel2() and call game() again with the new level.
+*      * functions to read user input
+*           An event listener is added to read and process user input.
+*           Specifically, whenever use presses any of the arrow keys in the keyboard.
+* */
 
 var currentLevel = 1;
 var canvas = document.querySelector('canvas'),

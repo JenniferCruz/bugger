@@ -1,3 +1,11 @@
+/*
+* This class puts together everything that makes up a world in a game.
+* It keeps track of the characters (good and bad) and information about all decorative elements, obstacles and goal.
+* Additionally, it implements all functions related to how those elements interact with one another.
+* This should be your class if you are trying to adjust things like collisions between elements in the canvas,
+* managing user input, player's lives and whether the goal was reached or not.
+*/
+
 var lives = 4;
 var HIT_SOUND = [new Sound('audio/dirt.wav'), new Sound('audio/minion_hit.wav'), new Sound('audio/bug.wav')];
 var WINNING_SOUND = new Sound('audio/achievement.wav');
