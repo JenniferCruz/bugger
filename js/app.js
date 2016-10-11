@@ -76,6 +76,12 @@ function getAvatarDimensionsRatios(avatar) {
     if (avatar == 'spider') {
         ratios = [1, 0.9];
     }
+    if (avatar == 'bee') {
+        ratios = [1, 0.9];
+    }
+    if (avatar == 'spider') {
+        ratios = [1, 0.8];
+    }
     return ratios;
 }
 

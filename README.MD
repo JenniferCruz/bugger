@@ -8,7 +8,7 @@ You can just click [here](https://jennifercruz.github.io/bugger/) and start play
 
 #### Download it to your computer
 
-1. Clone [this](https://jennifercruz.github.io/bugger/) repo
+1. Clone [this](https://github.com/JenniferCruz/bugger) repo
 
 #### Load it into your browser
 
